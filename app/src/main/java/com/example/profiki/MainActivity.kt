@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -27,6 +28,7 @@ import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonColors
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -122,7 +124,7 @@ class MainActivity : ComponentActivity() {
                     colors = OutlinedTextFieldDefaults.colors(unfocusedContainerColor = Color.White, focusedContainerColor = Color.White )
 
                 )
-                Button(onClick = {},
+                Button(onClick = { active = true},
                     shape = RoundedCornerShape(80),
                     colors = ButtonDefaults.buttonColors(
                         contentColor = Color.Red,
@@ -132,14 +134,33 @@ class MainActivity : ComponentActivity() {
                         expanded = active,
                         onDismissRequest = { active = false }
                     ) {
-                        RadioButton(
-                            selected = state,
-                            onClick = {state = true}
-                        )
-                        RadioButton(
-                            selected = !state,
-                            onClick = { state = false }
-                        )
+                        Row {
+                            RadioButton(
+                                selected = state,
+                                onClick = { state = true },
+                                colors = RadioButtonColors(
+                                    selectedColor = Color.Red,
+                                    unselectedColor = Color.Red,
+                                    disabledSelectedColor = Color.White,
+                                    disabledUnselectedColor = Color.White
+                                )
+                            )
+                            Text("Number")
+                        }
+                        Row {
+                            RadioButton(
+                                selected = !state,
+                                onClick = { state = false },
+                                colors = RadioButtonColors(
+                                    selectedColor = Color.Red,
+                                    unselectedColor = Color.Red,
+                                    disabledSelectedColor = Color.White,
+                                    disabledUnselectedColor = Color.White
+                                )
+                            )
+                            Text("Name")
+                        }
+
                     }
                 }
             }
