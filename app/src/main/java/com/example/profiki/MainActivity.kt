@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectableGroup
@@ -21,6 +22,7 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -41,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.profiki.ui.theme.ProfikiTheme
@@ -80,27 +83,33 @@ class MainActivity : ComponentActivity() {
         var state by remember { mutableStateOf(true) }
         var active by remember { mutableStateOf(false) }
         Column(modifier = Modifier.background(Color.Red) ) {
-            Row(modifier = Modifier.background(Color.Red).fillMaxWidth().fillMaxHeight(0.01F)){}
-            Row(modifier = Modifier.fillMaxWidth().background(Color.Red), horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+            Row(modifier = Modifier.fillMaxWidth().background(Color.Red).fillMaxHeight(0.1f), horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
                 Image(
                     imageVector = ImageVector.vectorResource(R.drawable.pokeball),
                     contentDescription = "pokeball",
-                    modifier = Modifier.padding(30.dp,0.dp)
+                    modifier = Modifier.padding(12.dp,16.dp, 0.dp, 0.dp).size(28.dp,28.dp)
                 )
-                Text("Pokédex", fontSize = 32.sp, color = Color.White, modifier = Modifier.padding(5.dp).align(Alignment.Top))
+                Text("Pokédex",
+                    fontSize = 32.sp,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(16.dp, 30.dp, 0.dp, 0.dp )
+                        .align(Alignment.Top))
             }
             Row(
                 modifier = Modifier.fillMaxWidth()
-                    .background(Color.Red),
+                    .background(Color.Red).fillMaxHeight(0.1f),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically)
             {
                 OutlinedTextField(
-                    modifier = Modifier.size(280.dp, 45.dp),
+                    modifier = Modifier.padding(12.dp,0.dp, 16.dp, 24.dp).height(45.dp).weight(1f),
                     shape = RoundedCornerShape(20.dp),
                     value = text,
                     onValueChange = {text = it},
-                    placeholder = {Text("Search", color = Color.Red, modifier = Modifier.align(Alignment.CenterVertically))},
+                    placeholder = {Text("Search",
+                        color = Color.Gray,
+                        modifier = Modifier.align(Alignment.CenterVertically))},
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Search,
@@ -129,7 +138,7 @@ class MainActivity : ComponentActivity() {
                     colors = ButtonDefaults.buttonColors(
                         contentColor = Color.Red,
                         containerColor = Color.White),
-                    modifier = Modifier.size(45.dp,45.dp)) {
+                    modifier = Modifier.padding(0.dp, 0.dp, 12.dp, 24.dp).size(45.dp,45.dp)) {
                     DropdownMenu(
                         expanded = active,
                         onDismissRequest = { active = false }
@@ -164,9 +173,13 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
-            Row(modifier = Modifier.background(Color.Red).fillMaxWidth().fillMaxHeight(0.03F)){}
         }
-
+        @Composable
+        fun CardMinimalExample() {
+            Card() {
+                Text(text = "Hello, world!")
+            }
+        }
 
     }
 }
