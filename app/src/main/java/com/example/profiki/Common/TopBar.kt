@@ -88,7 +88,6 @@ fun AppTopBar(){
 
                 onValueChange = {text = it},
                 placeholder = {
-
                         Text("Search",
                             color = Color.Gray,
                             modifier = Modifier.align(Alignment.CenterVertically)

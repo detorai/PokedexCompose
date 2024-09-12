@@ -7,12 +7,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -20,14 +23,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.profiki.Common.ParameterBox
+import com.example.profiki.Common.StatName
+import com.example.profiki.Common.StatValue
 
 @Preview
 @Composable
@@ -74,42 +82,12 @@ fun Pokemons(){
                 .padding(4.dp),
 
         ) {
-            //Type Row
-            Row (
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-                    .padding(20.dp,56.dp,20.dp,16.dp)
-            ){
-                    Text("Type",
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                        modifier = Modifier.padding(8.dp,0.dp)
-                            .background(
-                            Color.DarkGray,
-                            shape = RoundedCornerShape(18.dp)
-                        ).padding(8.dp, 2.dp)
-                    )
-
-                    Text("Type",
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                        modifier = Modifier.padding(8.dp,0.dp)
-                            .background(
-                            Color.DarkGray,
-                            shape = RoundedCornerShape(18.dp)
-                        ).padding(8.dp, 4.dp)
-
-                    )
-            }
 
             //Text Row
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth().padding(20.dp,16.dp,20.dp,0.dp)
+                modifier = Modifier.fillMaxWidth().padding(20.dp,92.dp,20.dp,0.dp)
             ) {
                 Text("About",
                     color = Color.Gray,
@@ -120,86 +98,38 @@ fun Pokemons(){
 
             //Characteristics Row
             Row(
-                horizontalArrangement = Arrangement.SpaceAround,
+                horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth().padding(20.dp,16.dp)
+                modifier = Modifier.fillMaxWidth(1f).fillMaxHeight(0.2f).padding(0.dp,16.dp)
             ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(0.2f)
-                        .fillMaxHeight(0.1f),
-                    verticalArrangement = Arrangement.SpaceBetween,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceEvenly,
-                        verticalAlignment = Alignment.Bottom,
-                    ) {
-                        Image(
-                            imageVector = ImageVector.vectorResource(R.drawable.weight),
-                            contentDescription = "weight",
-                            modifier = Modifier.size(16.dp,17.dp)
-                        )
-                        Text("9,9 kg",
-                            fontSize = 15.sp,
-                            modifier = Modifier.padding(4.dp,0.dp)
-                        )
-                    }
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.Bottom,
-                    ) {
-                        Text(
-                            "Weight",
-                            fontSize = 13.sp,
-                        )
-                    }
-                }
-                Image(
-                    imageVector = ImageVector.vectorResource(R.drawable.divider),
-                    contentDescription = "divider"
-                )
-                Column(
-                    modifier = Modifier.fillMaxWidth(0.25f)
-                        .fillMaxHeight(0.1f),
-                    verticalArrangement = Arrangement.SpaceBetween,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Row (
-                        horizontalArrangement = Arrangement.SpaceEvenly,
-                        verticalAlignment = Alignment.Bottom,
-                    ){
-                        Image(
-                            imageVector = ImageVector.vectorResource(R.drawable.straighten),
-                            contentDescription = "straighten",
-                            modifier = Modifier.size(16.dp,17.dp)
-                        )
-                        Text("9,9m",
-                            fontSize = 15.sp,
-                            modifier = Modifier.padding(4.dp,0.dp)
-                        )
 
-                    }
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.Bottom
+                ParameterBox(modifier = Modifier.fillMaxHeight().fillMaxWidth(0.2f),
+                    parameterName = "Weight",
+                    parameterValue = "9,9kg",
+                    parameterImage = R.drawable.weight)
 
-                        ) {
-                        Text(
-                            "Height",
-                            fontSize = 13.sp
-                        )
-                    }
-                }
                 Image(
                     imageVector = ImageVector.vectorResource(R.drawable.divider),
                     contentDescription = "divider",
+                    modifier = Modifier.fillMaxHeight(),
+                    contentScale = ContentScale.FillBounds
+                )
+                ParameterBox(modifier = Modifier.fillMaxHeight().fillMaxWidth(0.2f),
+                    parameterName = "Height",
+                    parameterValue = "9,9m",
+                    parameterImage = R.drawable.weight)
 
+                Image(
+                    imageVector = ImageVector.vectorResource(R.drawable.divider),
+                    contentDescription = "divider",
+                    modifier = Modifier.fillMaxHeight(),
+                    contentScale = ContentScale.FillBounds
                 )
                 Column(
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxWidth(0.3f)
-                        .fillMaxHeight(0.15f)
+                    modifier = Modifier
+                        .fillMaxHeight().fillMaxWidth(0.25f)
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.Center,
@@ -252,132 +182,84 @@ fun Pokemons(){
 
             //Base Stats Row
             Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
+                horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(0.8f).padding(0.dp,16.dp)
+                modifier = Modifier.fillMaxWidth().fillMaxHeight(0.7f).padding(0.dp,16.dp)
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.SpaceEvenly,
-                    modifier = Modifier.fillMaxHeight()
+                StatName(
+                    modifier = Modifier.fillMaxHeight().padding(20.dp, 0.dp, 16.dp, 0.dp)
+                )
 
-                ) {
-                    Text("HP",
-                        color = Color.Gray,
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text("ATK",
-                        color = Color.Gray,
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text("DEF",
-                        color = Color.Gray,
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text("SATK",
-                        color = Color.Gray,
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text("SDEF",
-                        color = Color.Gray,
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text("SPD", color = Color.Gray,
-                        fontSize = 15.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
                 Image(
                     imageVector = ImageVector.vectorResource(R.drawable.divider),
                     contentDescription = "divider",
-                    modifier = Modifier.fillMaxHeight().size(5.dp,40.dp)
+                    modifier = Modifier.fillMaxHeight().padding(0.dp, 0.dp, 16.dp, 0.dp),
+                    contentScale = ContentScale.FillBounds
                 )
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.SpaceEvenly,
-                    modifier = Modifier.fillMaxHeight()
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        Text("999",
-                            fontSize = 15.sp)
-                        Image(
-                            imageVector = ImageVector.vectorResource(R.drawable.background),
-                            contentDescription = "PowerLine"
-                        )
-                    }
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        Text("999",
-                            fontSize = 15.sp)
-                        Image(
-                            imageVector = ImageVector.vectorResource(R.drawable.background),
-                            contentDescription = "PowerLine"
-                        )
-                    }
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        Text("999",
-                            fontSize = 15.sp)
-                        Image(
-                            imageVector = ImageVector.vectorResource(R.drawable.background),
-                            contentDescription = "PowerLine"
-                        )
-                    }
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        Text("999",
-                            fontSize = 15.sp)
-                        Image(
-                            imageVector = ImageVector.vectorResource(R.drawable.background),
-                            contentDescription = "PowerLine"
-                        )
-                    }
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        Text("999",
-                            fontSize = 15.sp)
-                        Image(
-                            imageVector = ImageVector.vectorResource(R.drawable.background),
-                            contentDescription = "PowerLine"
-                        )
-                    }
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        Text("999",
-                            fontSize = 15.sp)
-                        Image(
-                            imageVector = ImageVector.vectorResource(R.drawable.background),
-                            contentDescription = "PowerLine"
-                        )
-                    }
-                }
+                StatValue(modifier = Modifier. fillMaxHeight(), value = "999", progressLine = 0.5f)
+
             }
         }
 
         //PokemonImage
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxWidth().fillMaxHeight(0.5f)
+        ){
         Image(
             imageVector = ImageVector.vectorResource(R.drawable.image),
             contentDescription = "PokemonImage",
-            modifier = Modifier.align(Alignment.TopCenter).padding(0.dp,100.dp,0.dp,0.dp).size(200.dp,200.dp)
+            modifier = Modifier.align(Alignment.TopCenter).padding(0.dp,100.dp,0.dp,0.dp).size(200.dp,200.dp).align(Alignment.TopCenter)
         )
+            //Type Row
+            Row (
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+                    .padding(20.dp,0.dp,20.dp,100.dp).align(Alignment.BottomCenter)
+            ){
+                Text("Type",
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    modifier = Modifier.padding(8.dp,0.dp)
+                        .background(
+                            Color.DarkGray,
+                            shape = RoundedCornerShape(18.dp)
+                        ).padding(8.dp, 4.dp)
+                )
+
+                Text("Type",
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    modifier = Modifier.padding(8.dp,0.dp)
+                        .background(
+                            Color.DarkGray,
+                            shape = RoundedCornerShape(18.dp)
+                        ).padding(8.dp, 4.dp)
+
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth().align(Alignment.Center).padding(18.dp, 0.dp)
+            ) {
+                Icon(
+                        imageVector = Icons.Default.KeyboardArrowLeft,
+                        contentDescription = "Back",
+                        tint = Color.White,
+                        modifier = Modifier.size(30.dp)
+                    )
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowRight,
+                    contentDescription = "Next",
+                    tint = Color.White,
+                    modifier = Modifier.size(30.dp)
+                )
+            }
+        }
     }
 }
 
