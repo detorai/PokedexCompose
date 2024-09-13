@@ -1,4 +1,4 @@
-package com.example.profiki.Common
+package com.example.profiki.Ul.Common
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -43,8 +43,9 @@ fun ParameterBox(modifier: Modifier, @DrawableRes parameterImage: Int, parameter
             )
         }
         Row(
+            horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.Bottom,
-            modifier = Modifier.fillMaxHeight(0.5f).align(Alignment.BottomCenter)
+            modifier = Modifier.fillMaxHeight(0.5f).fillMaxWidth().align(Alignment.BottomCenter)
         ) {
             Text(parameterName,
                 fontSize = 13.sp)

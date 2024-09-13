@@ -51,6 +51,15 @@ android {
 
 dependencies {
 
+    implementation(libs.voyager.hilt)
+    implementation(libs.voyager.tabNavigator)
+    implementation(libs.voyager.screenModel)
+    implementation(libs.voyager.bottomSheetNavigator)
+    implementation(libs.voyager.navigator)
+    implementation(libs.voyager.rxjava)
+    implementation(libs.voyager.kodein)
+    implementation(libs.voyager.koin)
+    implementation(libs.voyager.transitions)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -60,6 +69,10 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.glide)
+    implementation(libs.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

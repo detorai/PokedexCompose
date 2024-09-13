@@ -1,4 +1,4 @@
-package com.example.profiki.Common
+package com.example.profiki.Ul.Common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,6 +16,9 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,7 +30,9 @@ import com.example.profiki.R
 
 
 @Composable
-fun PokemonsCard() {
+fun PokemonsCard(onClickPokemon: ()-> Unit) {
+    val pokemonNumber by remember { mutableStateOf("999") }
+    val pokemonName by remember { mutableStateOf("Pokemon Name")}
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
@@ -50,7 +55,7 @@ fun PokemonsCard() {
 
                 ) {
                 Card (
-                    onClick = {},
+                    onClick = onClickPokemon,
                     colors = CardDefaults.cardColors(containerColor = Color.White),
                     modifier = Modifier.padding(8.dp)
                         .size(104.dp,108.dp),
@@ -60,7 +65,7 @@ fun PokemonsCard() {
                 ){
                     Box(modifier = Modifier.fillMaxWidth().fillMaxHeight()){
                         Text(
-                            "#999",
+                            pokemonNumber,
                             color = Color.Gray,
                             fontSize = 8.sp,
                             modifier = Modifier.padding(0.dp, 0.dp, 8.dp, 18.dp).align(Alignment.TopEnd)
@@ -81,7 +86,7 @@ fun PokemonsCard() {
                                     .fillMaxHeight()
                             ) {
                                 Text(
-                                    "Pokémon Name",
+                                    pokemonName,
                                     color = Color.Black,
                                     fontSize = 10.sp,
 

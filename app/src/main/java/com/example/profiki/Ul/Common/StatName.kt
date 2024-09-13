@@ -1,4 +1,4 @@
-package com.example.profiki.Common
+package com.example.profiki.Ul.Common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxHeight

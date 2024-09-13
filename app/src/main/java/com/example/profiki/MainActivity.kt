@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import cafe.adriel.voyager.navigator.Navigator
+import com.example.profiki.Ul.Screens.HomeScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -13,7 +15,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Pokedex()
+           Navigator(HomeScreen)
         }
     }
 }

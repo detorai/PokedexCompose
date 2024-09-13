@@ -1,4 +1,4 @@
-package com.example.profiki.Common
+package com.example.profiki.Ul.Common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -82,17 +82,15 @@ fun AppTopBar(){
             OutlinedTextField(
                 textStyle = TextStyle(
                     textAlign = TextAlign.Start),
-                modifier = Modifier.height(45.dp).weight(1f).padding(0.dp),
+                modifier = Modifier.padding(12.dp,0.dp, 16.dp, 24.dp).height(45.dp).weight(1f),
                 shape = RoundedCornerShape(20.dp),
                 value = text,
-
                 onValueChange = {text = it},
                 placeholder = {
                         Text("Search",
                             color = Color.Gray,
-                            modifier = Modifier.align(Alignment.CenterVertically)
-                                .background(Color.Blue).fillMaxSize(),
-                            textAlign = TextAlign.Center,
+                            modifier = Modifier.align(Alignment.CenterVertically),
+                            textAlign = TextAlign.Start,
                             fontSize = 14.sp
                         )
                 },
@@ -132,9 +130,14 @@ fun AppTopBar(){
                     contentAlignment = Alignment.Center){
                     Image(
                         modifier = Modifier.size(15.dp),
-                        imageVector = ImageVector.vectorResource(if (state == true){
-                            R.drawable.tag} else {
-                            R.drawable.text_format}),
+                        imageVector = ImageVector.vectorResource(
+                            if (state == true){
+                            R.drawable.tag
+                            }
+                            else {
+                            R.drawable.text_format
+                            }
+                        ),
                         contentDescription = "Pokemon",
                         alignment = Alignment.Center)
                 }
