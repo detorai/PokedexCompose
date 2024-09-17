@@ -13,7 +13,7 @@ object PokeService{
     }
 
     init {
-        val baseUrl = "https://www.rrtutors.com/"
+        val baseUrl = "https://pokeapi.co/"
         val client = OkHttpClient.Builder()
         client.connectTimeout(2, TimeUnit.MINUTES)
         client.readTimeout(2, TimeUnit.MINUTES)
