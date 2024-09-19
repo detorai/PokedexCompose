@@ -1,13 +1,14 @@
 package com.example.profiki.Repository
 
-import androidx.constraintlayout.helper.widget.Flow
+
 import com.example.profiki.Data.PokemonResponse
 import com.example.profiki.Data.PokemonServiceImpl
 import com.example.profiki.Data.SpeciesPokemonResponse
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class PokemonRepository(private val pokemonServiceImpl: PokemonServiceImpl) {
-    fun getPokemons(): Flow<List<PokemonResponse>>    = flow{
+    fun getPokemons(): Flow<List<PokemonResponse>> = flow{
         val result = pokemonServiceImpl.getPokemons()
         val pokemonList = mutableListOf<PokemonResponse>()
         if (result.isSuccessful){
