@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -23,11 +24,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.profiki.Data.Model.Pokemons
 import com.example.profiki.R
 
 
 @Composable
-fun PokemonsCard() {
+fun PokemonsCard(pokemons: List<Pokemons>) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
@@ -46,9 +48,9 @@ fun PokemonsCard() {
 
         ){
             items (
-                count = 12,
-
+                pokemons
                 ) {
+                pokemons ->
                 Card (
                     onClick = {},
                     colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -81,7 +83,7 @@ fun PokemonsCard() {
                                     .fillMaxHeight()
                             ) {
                                 Text(
-                                    "Pokémon Name",
+                                    text = pokemons!!.name,
                                     color = Color.Black,
                                     fontSize = 10.sp,
 
