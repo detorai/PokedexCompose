@@ -59,7 +59,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -67,4 +66,21 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.okhttp)
+    implementation(libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation(libs.voyager.hilt)
+    implementation(libs.voyager.tabNavigator)
+    implementation(libs.voyager.screenModel)
+    implementation(libs.voyager.bottomSheetNavigator)
+    implementation(libs.voyager.navigator)
+    implementation(libs.voyager.rxjava)
+    implementation(libs.voyager.kodein)
+    implementation(libs.voyager.koin)
+    implementation(libs.voyager.transitions)
+    implementation(libs.logging.interceptor)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+
+
 }
