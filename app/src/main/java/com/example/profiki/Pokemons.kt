@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -21,25 +20,29 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.profiki.Common.ParameterBox
 import com.example.profiki.Common.StatName
 import com.example.profiki.Common.StatValue
+import com.example.profiki.Data.Model.PokemonResponse
+import com.example.profiki.Data.PokeApiImpl
+import com.example.profiki.Data.PokeService
+import com.example.profiki.ui.UI.PokeViewModel
 
-@Preview
+
 @Composable
-fun Pokemons(){
+fun Pokemons(pokemon: PokemonResponse?){
+
     Box(
         modifier = Modifier.background(Color(184,184,184))
             .fillMaxHeight()
@@ -61,12 +64,13 @@ fun Pokemons(){
                 contentDescription = "Search Icon",
                 tint = Color.White,
                 )
-            Text("Pokémon Name",
+            Text(
+                pokemon?.name.toString(),
                 color = Color.White,
                 fontSize = 29.sp,
                 fontWeight = FontWeight.Bold,
                 )
-            Text("#999",
+            Text(pokemon?.order.toString(),
                 color = Color.White,
                 fontSize = 17.sp,
                 fontWeight = FontWeight.Bold)

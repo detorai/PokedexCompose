@@ -1,4 +1,4 @@
-package com.example.profiki.ui.theme
+package com.example.profiki.ui.UI
 
 import androidx.compose.ui.graphics.Color
 

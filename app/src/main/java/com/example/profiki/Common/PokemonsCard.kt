@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -24,12 +24,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.profiki.Data.Model.Pokemons
+import com.example.profiki.Data.Model.PokemonItem
 import com.example.profiki.R
+import java.util.Locale
 
 
 @Composable
-fun PokemonsCard(pokemons: List<Pokemons>) {
+fun PokemonsCard(pokemons: List<PokemonItem>) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
@@ -38,7 +39,7 @@ fun PokemonsCard(pokemons: List<Pokemons>) {
             .fillMaxWidth()
             .fillMaxHeight()
             .background(Color.Red)
-            .padding(6.dp,6.dp)
+            .padding(6.dp, 6.dp)
     ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
@@ -47,25 +48,30 @@ fun PokemonsCard(pokemons: List<Pokemons>) {
 
 
         ){
-            items (
+            itemsIndexed (
                 pokemons
                 ) {
-                pokemons ->
+                 index, pokemons ->
                 Card (
                     onClick = {},
                     colors = CardDefaults.cardColors(containerColor = Color.White),
-                    modifier = Modifier.padding(8.dp)
-                        .size(104.dp,108.dp),
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .size(104.dp, 108.dp),
                     elevation = CardDefaults.cardElevation(
                         defaultElevation = 6.dp
                     )
                 ){
-                    Box(modifier = Modifier.fillMaxWidth().fillMaxHeight()){
+                    Box(modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight()){
                         Text(
-                            "#999",
+                            text = "#${pokemonNumber(index+1)}",
                             color = Color.Gray,
                             fontSize = 8.sp,
-                            modifier = Modifier.padding(0.dp, 0.dp, 8.dp, 18.dp).align(Alignment.TopEnd)
+                            modifier = Modifier
+                                .padding(0.dp, 4.dp, 8.dp, 0.dp)
+                                .align(Alignment.TopEnd)
                         )
 
                         Card(
@@ -73,19 +79,24 @@ fun PokemonsCard(pokemons: List<Pokemons>) {
                             colors = CardDefaults.cardColors(
                                 containerColor = Color.LightGray
                             ),
-                            modifier = Modifier.fillMaxWidth().fillMaxHeight(0.4f).align(Alignment.BottomCenter),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight(0.4f)
+                                .align(Alignment.BottomCenter),
 
 
                             ){
                             Row(verticalAlignment = Alignment.Bottom,
                                 horizontalArrangement = Arrangement.Center,
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier
+                                    .fillMaxWidth()
                                     .fillMaxHeight()
                             ) {
                                 Text(
-                                    text = pokemons!!.name,
+                                    text = pokemons.name.capitalize(Locale.ROOT),
                                     color = Color.Black,
                                     fontSize = 10.sp,
+                                    modifier = Modifier.padding(0.dp,0.dp,0.dp,4.dp),
 
                                     )
                             }
@@ -103,5 +114,15 @@ fun PokemonsCard(pokemons: List<Pokemons>) {
                 }
             }
         }
+    }
+}
+fun pokemonNumber(index: Int):String {
+    val indexString = index.toString()
+    return when (indexString.length){
+        1 -> "00$indexString"
+        2 -> "0$indexString"
+        3 -> indexString
+        else -> throw
+                IllegalArgumentException("Length should be 1 to 3")
     }
 }

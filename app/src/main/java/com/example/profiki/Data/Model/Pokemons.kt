@@ -1,11 +1,11 @@
 package com.example.profiki.Data.Model
 
 
-data class Pokemons(
+data class PokemonItem(
     val name: String,
     val url: String
 )
 
-data class PokemonResponse(
-    val results: List<Pokemons>
+data class PokemonItemsResponse(
+    val results: List<PokemonItem>
 )

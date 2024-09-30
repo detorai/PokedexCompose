@@ -1,12 +1,14 @@
 package com.example.profiki.Data
 
+import com.example.profiki.Data.Model.PokemonItemsResponse
 import com.example.profiki.Data.Model.PokemonResponse
-import com.example.profiki.Data.Model.Pokemons
-import kotlinx.coroutines.flow.Flow
-import okhttp3.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface PokeApi {
     @GET("api/v2/pokemon/")
-    suspend  fun getPokemons(): PokemonResponse
+    suspend fun getPokemons(): PokemonItemsResponse
+
+    @GET ("api/v2/pokemon/{name}")
+    suspend fun getPokemon(@Path("name")name: String): PokemonResponse
 }
