@@ -17,9 +17,8 @@ import com.example.profiki.Data.PokeService
 import com.example.profiki.ui.UI.PokeViewModel
 
 @SuppressLint("SuspiciousIndentation")
-@Preview
 @Composable
-fun Pokedex(){
+fun Pokedex(onClickPokemon: ()-> Unit){
     val apiImpl = PokeApiImpl(PokeService.service)
     val viewModel = PokeViewModel(apiImpl)
     viewModel.getPokemons()
@@ -32,7 +31,9 @@ fun Pokedex(){
                     .padding(innerPadding),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-                PokemonsCard(pokemons.value)
+                PokemonsCard(
+                    onClickPokemon = onClickPokemon,
+                    pokemons = pokemons.value)
             }
         }
 }

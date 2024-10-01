@@ -30,7 +30,7 @@ import java.util.Locale
 
 
 @Composable
-fun PokemonsCard(pokemons: List<PokemonItem>) {
+fun PokemonsCard(pokemons: List<PokemonItem>, onClickPokemon: ()-> Unit) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
@@ -53,7 +53,7 @@ fun PokemonsCard(pokemons: List<PokemonItem>) {
                 ) {
                  index, pokemons ->
                 Card (
-                    onClick = {},
+                    onClick = onClickPokemon,
                     colors = CardDefaults.cardColors(containerColor = Color.White),
                     modifier = Modifier
                         .padding(8.dp)

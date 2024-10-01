@@ -50,7 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.profiki.R
 
-@Preview
+
 @Composable
 fun AppTopBar(){
     var text by remember { mutableStateOf("") }
@@ -82,19 +82,17 @@ fun AppTopBar(){
             OutlinedTextField(
                 textStyle = TextStyle(
                     textAlign = TextAlign.Start),
-                modifier = Modifier.height(45.dp).weight(1f).padding(0.dp),
+                modifier = Modifier.padding(12.dp,0.dp, 16.dp, 24.dp).height(45.dp).weight(1f),
                 shape = RoundedCornerShape(20.dp),
                 value = text,
-
                 onValueChange = {text = it},
                 placeholder = {
-                        Text("Search",
-                            color = Color.Gray,
-                            modifier = Modifier.align(Alignment.CenterVertically)
-                                .background(Color.Blue).fillMaxSize(),
-                            textAlign = TextAlign.Center,
-                            fontSize = 14.sp
-                        )
+                    Text("Search",
+                        color = Color.Gray,
+                        modifier = Modifier.align(Alignment.CenterVertically),
+                        textAlign = TextAlign.Start,
+                        fontSize = 14.sp
+                    )
                 },
                 leadingIcon = {
                     Icon(
@@ -117,8 +115,10 @@ fun AppTopBar(){
                         tint = Color.Red
                     )
                 },
-                colors = OutlinedTextFieldDefaults.colors(unfocusedContainerColor = Color.White, focusedContainerColor = Color.White )
-
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedContainerColor = Color.White,
+                    focusedContainerColor = Color.White
+                )
             )
             Button(onClick = { active = true},
                 shape = CircleShape,

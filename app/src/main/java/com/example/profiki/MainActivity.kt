@@ -6,9 +6,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.collectAsState
+import cafe.adriel.voyager.navigator.Navigator
 import com.example.profiki.Data.PokeApi
 import com.example.profiki.Data.PokeApiImpl
 import com.example.profiki.Data.PokeService
+import com.example.profiki.Screens.HomeScreen
 import com.example.profiki.ui.UI.PokeViewModel
 
 class MainActivity : ComponentActivity() {
@@ -18,11 +20,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val apiImpl = PokeApiImpl(PokeService.service)
+            Navigator(HomeScreen)
+         /*   val apiImpl = PokeApiImpl(PokeService.service)
             val viewModel = PokeViewModel(apiImpl)
             viewModel.getPokemon("bulbasaur")
             val pokemon = viewModel.pokemon.collectAsState()
-            Pokemons(pokemon.value)
+            Pokemons(pokemon.value)*/
         }
     }
 }

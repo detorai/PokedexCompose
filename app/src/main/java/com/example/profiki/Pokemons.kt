@@ -18,9 +18,9 @@ import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,17 +31,16 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.profiki.Common.Abilities
 import com.example.profiki.Common.ParameterBox
 import com.example.profiki.Common.StatName
 import com.example.profiki.Common.StatValue
 import com.example.profiki.Data.Model.PokemonResponse
-import com.example.profiki.Data.PokeApiImpl
-import com.example.profiki.Data.PokeService
-import com.example.profiki.ui.UI.PokeViewModel
+import java.util.Locale
 
 
 @Composable
-fun Pokemons(pokemon: PokemonResponse?){
+fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit){
 
     Box(
         modifier = Modifier.background(Color(184,184,184))
@@ -56,24 +55,33 @@ fun Pokemons(pokemon: PokemonResponse?){
 
         //TopNameRow
         Row(
-            horizontalArrangement = Arrangement.SpaceAround,
+            horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth().padding(4.dp,20.dp).align(Alignment.TopCenter)
         ) {
-            Icon(imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Search Icon",
-                tint = Color.White,
+            IconButton(
+                onClick = onClickBack
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Search Icon",
+                    tint = Color.White,
+                    modifier = Modifier.size(21.dp,21.dp)
                 )
+            }
             Text(
-                pokemon?.name.toString(),
+                pokemon?.name.toString().capitalize(Locale.ROOT),
                 color = Color.White,
                 fontSize = 29.sp,
                 fontWeight = FontWeight.Bold,
                 )
-            Text(pokemon?.order.toString(),
+            Text(
+                pokemon?.order.toString(),
                 color = Color.White,
                 fontSize = 17.sp,
-                fontWeight = FontWeight.Bold)
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(180.dp,0.dp,20.dp,0.dp)
+                )
         }
         Card (
             colors = CardDefaults.cardColors(
@@ -109,7 +117,7 @@ fun Pokemons(pokemon: PokemonResponse?){
 
                 ParameterBox(modifier = Modifier.fillMaxHeight().fillMaxWidth(0.2f),
                     parameterName = "Weight",
-                    parameterValue = "9,9kg",
+                    parameterValue = "${pokemon?.weight}kg",
                     parameterImage = R.drawable.weight)
 
                 Image(
@@ -120,8 +128,8 @@ fun Pokemons(pokemon: PokemonResponse?){
                 )
                 ParameterBox(modifier = Modifier.fillMaxHeight().fillMaxWidth(0.2f),
                     parameterName = "Height",
-                    parameterValue = "9,9m",
-                    parameterImage = R.drawable.weight)
+                    parameterValue = "${pokemon?.height}m",
+                    parameterImage = R.drawable.straighten)
 
                 Image(
                     imageVector = ImageVector.vectorResource(R.drawable.divider),
@@ -135,22 +143,7 @@ fun Pokemons(pokemon: PokemonResponse?){
                     modifier = Modifier
                         .fillMaxHeight().fillMaxWidth(0.25f)
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-
-                    ) {
-                        Text(
-                            "Ability 1",
-                            fontSize = 15.sp
-                        )
-                    }
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                    ) {
-                    Text("Ability 2",
-                        fontSize = 15.sp
-                        )
-                    }
+                   Abilities(pokemon)
                     Row(
                         horizontalArrangement = Arrangement.Center,
                     ) {
@@ -266,6 +259,7 @@ fun Pokemons(pokemon: PokemonResponse?){
         }
     }
 }
+
 
 
 
