@@ -25,12 +25,13 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.profiki.Data.Model.PokemonItem
+import com.example.profiki.Data.Model.PokemonResponse
 import com.example.profiki.R
 import java.util.Locale
 
 
 @Composable
-fun PokemonsCard(pokemons: List<PokemonItem>, onClickPokemon: ()-> Unit) {
+fun PokemonsCard(pokemons: List<PokemonItem?>, pokemon: PokemonResponse?, onClickPokemon: ()-> Unit) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
@@ -43,16 +44,15 @@ fun PokemonsCard(pokemons: List<PokemonItem>, onClickPokemon: ()-> Unit) {
     ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
-            modifier = Modifier.padding(8.dp,24.dp),
+            modifier = Modifier.padding(8.dp, 24.dp),
             horizontalArrangement = Arrangement.Center
 
 
-        ){
-            itemsIndexed (
+        ) {
+            itemsIndexed(
                 pokemons
-                ) {
-                 index, pokemons ->
-                Card (
+            ) { index, pokemons ->
+                Card(
                     onClick = onClickPokemon,
                     colors = CardDefaults.cardColors(containerColor = Color.White),
                     modifier = Modifier
@@ -61,12 +61,20 @@ fun PokemonsCard(pokemons: List<PokemonItem>, onClickPokemon: ()-> Unit) {
                     elevation = CardDefaults.cardElevation(
                         defaultElevation = 6.dp
                     )
-                ){
-                    Box(modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()){
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                    ) {
                         Text(
-                            text = "#${pokemonNumber(index+1)}",
+                            text = "#${pokemonNumber(
+                                pokemon = pokemon,
+                                pokemonOrder = pokemonNameToNumber(
+                                    pokemons = pokemons,
+                                    pokemon = pokemon)
+                                    .toString()
+                            )}",
                             color = Color.Gray,
                             fontSize = 8.sp,
                             modifier = Modifier
@@ -85,18 +93,19 @@ fun PokemonsCard(pokemons: List<PokemonItem>, onClickPokemon: ()-> Unit) {
                                 .align(Alignment.BottomCenter),
 
 
-                            ){
-                            Row(verticalAlignment = Alignment.Bottom,
+                            ) {
+                            Row(
+                                verticalAlignment = Alignment.Bottom,
                                 horizontalArrangement = Arrangement.Center,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .fillMaxHeight()
                             ) {
                                 Text(
-                                    text = pokemons.name.capitalize(Locale.ROOT),
+                                    text = pokemons?.name?.capitalize(Locale.ROOT).toString(),
                                     color = Color.Black,
                                     fontSize = 10.sp,
-                                    modifier = Modifier.padding(0.dp,0.dp,0.dp,4.dp),
+                                    modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 4.dp),
 
                                     )
                             }
@@ -108,7 +117,6 @@ fun PokemonsCard(pokemons: List<PokemonItem>, onClickPokemon: ()-> Unit) {
                             alignment = Alignment.Center
 
 
-
                         )
                     }
                 }
@@ -116,13 +124,5 @@ fun PokemonsCard(pokemons: List<PokemonItem>, onClickPokemon: ()-> Unit) {
         }
     }
 }
-fun pokemonNumber(index: Int):String {
-    val indexString = index.toString()
-    return when (indexString.length){
-        1 -> "00$indexString"
-        2 -> "0$indexString"
-        3 -> indexString
-        else -> throw
-                IllegalArgumentException("Length should be 1 to 3")
-    }
-}
+
+

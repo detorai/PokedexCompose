@@ -21,7 +21,11 @@ object HomeScreen: Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
-        Pokedex { navigator?.push(CardScreen) }
+        val apiImpl = PokeApiImpl(PokeService.service)
+        val viewModel = rememberScreenModel{ PokeViewModel(apiImpl)}
+        viewModel.getPokemon("bulbasaur")
+        val pokemon = viewModel.pokemon.collectAsState()
+        Pokedex(pokemon = pokemon.value) { navigator?.push(CardScreen) }
     }
 }
 object CardScreen: Screen{

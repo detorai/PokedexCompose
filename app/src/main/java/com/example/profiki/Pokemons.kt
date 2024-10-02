@@ -117,7 +117,7 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit){
 
                 ParameterBox(modifier = Modifier.fillMaxHeight().fillMaxWidth(0.2f),
                     parameterName = "Weight",
-                    parameterValue = "${pokemon?.weight}kg",
+                    parameterValue = "${pokemon?.weight?.toFloat()?.div(10)} kg",
                     parameterImage = R.drawable.weight)
 
                 Image(
@@ -128,7 +128,7 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit){
                 )
                 ParameterBox(modifier = Modifier.fillMaxHeight().fillMaxWidth(0.2f),
                     parameterName = "Height",
-                    parameterValue = "${pokemon?.height}m",
+                    parameterValue = "${pokemon?.height?.toFloat()?.div(10)} m",
                     parameterImage = R.drawable.straighten)
 
                 Image(
@@ -141,7 +141,7 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit){
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
-                        .fillMaxHeight().fillMaxWidth(0.25f)
+                        .fillMaxHeight().fillMaxWidth(0.3f)
                 ) {
                    Abilities(pokemon)
                     Row(
@@ -193,7 +193,7 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit){
                     modifier = Modifier.fillMaxHeight().padding(0.dp, 0.dp, 16.dp, 0.dp),
                     contentScale = ContentScale.FillBounds
                 )
-                StatValue(modifier = Modifier. fillMaxHeight(), value = "999", progressLine = 0.5f)
+                StatValue(stateValue = pokemon,modifier = Modifier. fillMaxHeight())
 
             }
         }

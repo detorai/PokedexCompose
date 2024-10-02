@@ -12,13 +12,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.profiki.Common.AppTopBar
 import com.example.profiki.Common.PokemonsCard
+import com.example.profiki.Data.Model.PokemonResponse
 import com.example.profiki.Data.PokeApiImpl
 import com.example.profiki.Data.PokeService
 import com.example.profiki.ui.UI.PokeViewModel
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun Pokedex(onClickPokemon: ()-> Unit){
+fun Pokedex(pokemon: PokemonResponse?, onClickPokemon: ()-> Unit){
     val apiImpl = PokeApiImpl(PokeService.service)
     val viewModel = PokeViewModel(apiImpl)
     viewModel.getPokemons()
@@ -33,7 +34,8 @@ fun Pokedex(onClickPokemon: ()-> Unit){
             ) {
                 PokemonsCard(
                     onClickPokemon = onClickPokemon,
-                    pokemons = pokemons.value)
+                    pokemons = pokemons.value,
+                    pokemon = pokemon)
             }
         }
 }
