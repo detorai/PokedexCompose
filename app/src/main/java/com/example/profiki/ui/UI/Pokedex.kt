@@ -1,4 +1,4 @@
-package com.example.profiki
+package com.example.profiki.ui.UI
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
@@ -6,24 +6,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.profiki.Common.AppTopBar
 import com.example.profiki.Common.PokemonsCard
-import com.example.profiki.Data.Model.PokemonResponse
-import com.example.profiki.Data.PokeApiImpl
-import com.example.profiki.Data.PokeService
-import com.example.profiki.ui.UI.PokeViewModel
+import com.example.profiki.Data.Model.PokemonItem
 
-@SuppressLint("SuspiciousIndentation")
+@SuppressLint("SuspiciousIndentation", "StateFlowValueCalledInComposition")
 @Composable
-fun Pokedex(pokemon: PokemonResponse?, onClickPokemon: ()-> Unit){
-    val apiImpl = PokeApiImpl(PokeService.service)
-    val viewModel = PokeViewModel(apiImpl)
-    viewModel.getPokemons()
-    val pokemons  = viewModel.pokemons.collectAsState()
+fun Pokedex(pokemons: List<PokemonItem?>, onClickPokemon: (String) -> Unit){
         Scaffold(
             topBar = { AppTopBar() }
         ){ innerPadding ->
@@ -34,8 +25,8 @@ fun Pokedex(pokemon: PokemonResponse?, onClickPokemon: ()-> Unit){
             ) {
                 PokemonsCard(
                     onClickPokemon = onClickPokemon,
-                    pokemons = pokemons.value,
-                    pokemon = pokemon)
+                    pokemons = pokemons
+                    )
             }
         }
 }

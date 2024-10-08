@@ -1,8 +1,9 @@
 package com.example.profiki.ui.UI
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import cafe.adriel.voyager.core.model.ScreenModel
 import com.example.profiki.Data.Model.PokemonItem
 import com.example.profiki.Data.Model.PokemonResponse
 import com.example.profiki.Data.PokeApiImpl
@@ -11,11 +12,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class PokeViewModel(val apiImpl: PokeApiImpl): ViewModel(), ScreenModel {
+
+class PokeViewModel(val apiImpl: PokeApiImpl): ViewModel() {
     private val _pokemons = MutableStateFlow<List<PokemonItem>>(emptyList())
     val pokemons: StateFlow<List<PokemonItem>> = _pokemons.asStateFlow()
     private val _pokemon = MutableStateFlow<PokemonResponse?>(null)
     val pokemon: StateFlow<PokemonResponse?> = _pokemon.asStateFlow()
+
+
 
 
     fun getPokemon(name: String){

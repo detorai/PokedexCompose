@@ -1,4 +1,4 @@
-package com.example.profiki
+package com.example.profiki.ui.UI
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -36,6 +36,7 @@ import com.example.profiki.Common.ParameterBox
 import com.example.profiki.Common.StatName
 import com.example.profiki.Common.StatValue
 import com.example.profiki.Data.Model.PokemonResponse
+import com.example.profiki.R
 import java.util.Locale
 
 
@@ -118,7 +119,8 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit){
                 ParameterBox(modifier = Modifier.fillMaxHeight().fillMaxWidth(0.2f),
                     parameterName = "Weight",
                     parameterValue = "${pokemon?.weight?.toFloat()?.div(10)} kg",
-                    parameterImage = R.drawable.weight)
+                    parameterImage = R.drawable.weight
+                )
 
                 Image(
                     imageVector = ImageVector.vectorResource(R.drawable.divider),
@@ -129,7 +131,8 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit){
                 ParameterBox(modifier = Modifier.fillMaxHeight().fillMaxWidth(0.2f),
                     parameterName = "Height",
                     parameterValue = "${pokemon?.height?.toFloat()?.div(10)} m",
-                    parameterImage = R.drawable.straighten)
+                    parameterImage = R.drawable.straighten
+                )
 
                 Image(
                     imageVector = ImageVector.vectorResource(R.drawable.divider),

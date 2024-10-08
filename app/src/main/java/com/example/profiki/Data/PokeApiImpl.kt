@@ -2,6 +2,7 @@ package com.example.profiki.Data
 
 import com.example.profiki.Data.Model.PokemonItemsResponse
 import com.example.profiki.Data.Model.PokemonResponse
+import com.example.profiki.Data.Model.SpeciesPokemonResponse
 import kotlinx.coroutines.flow.flow
 
 class PokeApiImpl(private val pokeApi: PokeApi) {
@@ -10,5 +11,8 @@ class PokeApiImpl(private val pokeApi: PokeApi) {
     }
     fun getPokemon(name: String) = flow<PokemonResponse> {
         emit(pokeApi.getPokemon(name))
+    }
+    fun getSpeciesByName(name:String) = flow<SpeciesPokemonResponse> {
+        emit(pokeApi.getSpeciesByName(name))
     }
 }
