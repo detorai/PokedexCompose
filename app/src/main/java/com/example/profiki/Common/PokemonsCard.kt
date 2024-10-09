@@ -20,18 +20,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.profiki.Data.Model.PokemonItem
 import com.example.profiki.Data.Model.PokemonResponse
-import com.example.profiki.R
 import java.util.Locale
 
 
 @Composable
-fun PokemonsCard(pokemons: List<PokemonItem?>, onClickPokemon: (String)-> Unit) {
+fun PokemonsCard(pokemons: List<PokemonResponse>, onClickPokemon: (String)-> Unit) {
+
     Card(
         colors = CardDefaults.cardColors(
             containerColor = Color.White,
@@ -52,8 +49,9 @@ fun PokemonsCard(pokemons: List<PokemonItem?>, onClickPokemon: (String)-> Unit) 
             itemsIndexed(
                 pokemons
             ) { index, pokemons ->
+                val imageBitmap = loadImage(pokemons.sprites.other.official_artwork.front_default)
                 Card(
-                    onClick = {onClickPokemon(pokemons?.name.toString())},
+                    onClick = {onClickPokemon(pokemons.name)},
                     colors = CardDefaults.cardColors(containerColor = Color.White),
                     modifier = Modifier
                         .padding(8.dp)
@@ -68,7 +66,7 @@ fun PokemonsCard(pokemons: List<PokemonItem?>, onClickPokemon: (String)-> Unit) 
                             .fillMaxHeight()
                     ) {
                         Text(
-                            text = pokemonNumber(index+1),
+                            text = pokemonNumber(pokemons.order),
                             color = Color.Gray,
                             fontSize = 8.sp,
                             modifier = Modifier
@@ -79,7 +77,7 @@ fun PokemonsCard(pokemons: List<PokemonItem?>, onClickPokemon: (String)-> Unit) 
                         Card(
                             shape = RoundedCornerShape(7.dp),
                             colors = CardDefaults.cardColors(
-                                containerColor = Color.LightGray
+                                containerColor = Color(0xFFEFEFEF)
                             ),
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -96,7 +94,7 @@ fun PokemonsCard(pokemons: List<PokemonItem?>, onClickPokemon: (String)-> Unit) 
                                     .fillMaxHeight()
                             ) {
                                 Text(
-                                    text = pokemons?.name?.capitalize(Locale.ROOT).toString(),
+                                    text = pokemons.name.capitalize(Locale.ROOT),
                                     color = Color.Black,
                                     fontSize = 10.sp,
                                     modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 4.dp),
@@ -105,8 +103,8 @@ fun PokemonsCard(pokemons: List<PokemonItem?>, onClickPokemon: (String)-> Unit) 
                             }
                         }
                         Image(
-                            modifier = Modifier.align(Alignment.Center),
-                            imageVector = ImageVector.vectorResource(R.drawable.image),
+                            modifier = Modifier.align(Alignment.Center).size(72.dp,72.dp),
+                            bitmap = imageBitmap,
                             contentDescription = "Pokemon",
                             alignment = Alignment.Center
 

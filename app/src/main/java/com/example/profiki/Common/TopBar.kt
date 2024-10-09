@@ -48,14 +48,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.profiki.Data.Model.PokemonResponse
+import com.example.profiki.Data.Model.StateSort
 import com.example.profiki.R
 
 
 @Composable
-fun AppTopBar(){
+fun AppTopBar(onSortModeChange: (StateSort) -> Unit){
+    var sortMode by remember { mutableStateOf(StateSort.NUMBER) }
     var text by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
-    var state by remember { mutableStateOf(true) }
     Column(modifier = Modifier.background(Color.Red) ) {
         Row(modifier = Modifier.fillMaxWidth()
             .background(Color.Red)
@@ -132,7 +134,7 @@ fun AppTopBar(){
                     contentAlignment = Alignment.Center){
                     Image(
                         modifier = Modifier.size(15.dp),
-                        imageVector = ImageVector.vectorResource(if (state == true){
+                        imageVector = ImageVector.vectorResource(if (sortMode == StateSort.NUMBER){
                             R.drawable.tag} else {
                             R.drawable.text_format}),
                         contentDescription = "Pokemon",
@@ -170,8 +172,9 @@ fun AppTopBar(){
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             RadioButton(
-                                selected = state,
-                                onClick = { state = true },
+                                selected = sortMode == StateSort.NUMBER,
+                                onClick = { sortMode = StateSort.NUMBER
+                                          onSortModeChange(sortMode)},
                                 colors = RadioButtonColors(
                                     selectedColor = Color.Red,
                                     unselectedColor = Color.Red,
@@ -191,8 +194,9 @@ fun AppTopBar(){
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             RadioButton(
-                                selected = !state,
-                                onClick = { state = false },
+                                selected = sortMode == StateSort.NAME,
+                                onClick = { sortMode = StateSort.NAME
+                                          onSortModeChange(sortMode)},
                                 colors = RadioButtonColors(
                                     selectedColor = Color.Red,
                                     unselectedColor = Color.Red,
@@ -210,5 +214,6 @@ fun AppTopBar(){
                 }
             }
         }
+
     }
 }

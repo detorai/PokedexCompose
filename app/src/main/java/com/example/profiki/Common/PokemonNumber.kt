@@ -4,8 +4,8 @@ package com.example.profiki.Common
 
 import com.example.profiki.Data.Model.PokemonResponse
 
-fun pokemonNumber(index: Int): String {
-    val pokemonNumber = index.toString()
+fun pokemonNumber(order: Int): String {
+    val pokemonNumber = order.toString()
     return when (pokemonNumber.length){
         1 -> "#00$pokemonNumber"
         2 -> "#0$pokemonNumber"

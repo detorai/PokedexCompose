@@ -20,12 +20,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Navigator(HomeScreen)
-         /*   val apiImpl = PokeApiImpl(PokeService.service)
-            val viewModel = PokeViewModel(apiImpl)
-            viewModel.getPokemon("bulbasaur")
-            val pokemon = viewModel.pokemon.collectAsState()
-            Pokemons(pokemon.value)*/
+            Navigator(HomeScreen())
         }
     }
 }
