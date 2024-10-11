@@ -35,6 +35,8 @@ import com.example.profiki.Common.Abilities
 import com.example.profiki.Common.ParameterBox
 import com.example.profiki.Common.StatName
 import com.example.profiki.Common.StatValue
+import com.example.profiki.Common.loadImage
+import com.example.profiki.Common.pokemonNumber
 import com.example.profiki.Data.Model.PokemonResponse
 import com.example.profiki.R
 import java.util.Locale
@@ -56,7 +58,7 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit){
 
         //TopNameRow
         Row(
-            horizontalArrangement = Arrangement.Start,
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth().padding(4.dp,20.dp).align(Alignment.TopCenter)
         ) {
@@ -71,17 +73,18 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit){
                 )
             }
             Text(
-                pokemon?.name.toString().capitalize(Locale.ROOT),
+                pokemon?.name?.capitalize(Locale.ROOT).toString(),
                 color = Color.White,
                 fontSize = 29.sp,
                 fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(0.dp, 0.dp, 150.dp, 0.dp)
                 )
             Text(
-                pokemon?.order.toString(),
+                text = pokemonNumber(pokemon?.order),
                 color = Color.White,
                 fontSize = 17.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(180.dp,0.dp,20.dp,0.dp)
+                modifier = Modifier.padding(0.dp, 0.dp, 20.dp, 0.dp)
                 )
         }
         Card (
@@ -207,9 +210,9 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit){
             modifier = Modifier.fillMaxWidth().fillMaxHeight(0.5f)
         ){
         Image(
-            imageVector = ImageVector.vectorResource(R.drawable.image),
+            bitmap = loadImage(pokemon?.sprites?.other?.official_artwork?.front_default.toString()),
             contentDescription = "PokemonImage",
-            modifier = Modifier.align(Alignment.TopCenter).padding(0.dp,100.dp,0.dp,0.dp).size(200.dp,200.dp).align(Alignment.TopCenter)
+            modifier = Modifier.align(Alignment.TopCenter).padding(0.dp,100.dp,0.dp,0.dp).size(230.dp,230.dp).align(Alignment.TopCenter)
         )
             //Type Row
             Row (

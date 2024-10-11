@@ -2,15 +2,15 @@
 
 package com.example.profiki.Common
 
-import com.example.profiki.Data.Model.PokemonResponse
-
-fun pokemonNumber(order: Int): String {
+fun pokemonNumber(order: Int?): String {
+    if (order == null) {
+        return "#000"
+    }
     val pokemonNumber = order.toString()
-    return when (pokemonNumber.length){
+    return when (pokemonNumber.length) {
         1 -> "#00$pokemonNumber"
         2 -> "#0$pokemonNumber"
         3 -> "#$pokemonNumber"
-        else -> throw
-        IllegalArgumentException("Length should be 1 to 3")
+        else -> throw IllegalArgumentException("Length should be 1 to 3")
     }
 }

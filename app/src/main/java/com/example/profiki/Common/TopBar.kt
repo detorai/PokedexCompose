@@ -54,7 +54,7 @@ import com.example.profiki.R
 
 
 @Composable
-fun AppTopBar(onSortModeChange: (StateSort) -> Unit){
+fun AppTopBar(sortMode: StateSort, onSortModeChange: (StateSort) -> Unit){
     var sortMode by remember { mutableStateOf(StateSort.NUMBER) }
     var text by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
@@ -173,8 +173,8 @@ fun AppTopBar(onSortModeChange: (StateSort) -> Unit){
                         ) {
                             RadioButton(
                                 selected = sortMode == StateSort.NUMBER,
-                                onClick = { sortMode = StateSort.NUMBER
-                                          onSortModeChange(sortMode)},
+                                onClick = { onSortModeChange(StateSort.NUMBER)
+                                    sortMode = StateSort.NUMBER},
                                 colors = RadioButtonColors(
                                     selectedColor = Color.Red,
                                     unselectedColor = Color.Red,
@@ -195,8 +195,8 @@ fun AppTopBar(onSortModeChange: (StateSort) -> Unit){
                         ) {
                             RadioButton(
                                 selected = sortMode == StateSort.NAME,
-                                onClick = { sortMode = StateSort.NAME
-                                          onSortModeChange(sortMode)},
+                                onClick = { onSortModeChange(StateSort.NAME)
+                                    sortMode = StateSort.NAME},
                                 colors = RadioButtonColors(
                                     selectedColor = Color.Red,
                                     unselectedColor = Color.Red,

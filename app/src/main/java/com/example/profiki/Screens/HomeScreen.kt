@@ -24,6 +24,7 @@ class HomeScreen: Screen {
     private val apiImpl = PokeApiImpl(PokeService.service)
     private val viewModel = PokeViewModel(apiImpl, PokeApplication())
 
+
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
@@ -32,7 +33,8 @@ class HomeScreen: Screen {
         Pokedex(
             pokemons = pokemonsAbout,
             onClickPokemon = {name -> navigator?.push(PokemonScreen(name))},
-            sortMode = StateSort.NUMBER
+            sortMode = viewModel.currentSortMode,
+            onSortModeChange = viewModel::updateSortMode
             )
     }
 }

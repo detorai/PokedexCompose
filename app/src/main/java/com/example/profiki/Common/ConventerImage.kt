@@ -3,7 +3,6 @@
 package com.example.profiki.Common
 
 import android.graphics.Bitmap
-import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue

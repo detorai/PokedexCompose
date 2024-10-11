@@ -32,6 +32,9 @@ class PokeViewModel(val apiImpl: PokeApiImpl, application: PokeApplication): And
     private val _pokemon = MutableStateFlow<PokemonResponse?>(null)
     val pokemon: StateFlow<PokemonResponse?> = _pokemon.asStateFlow()
 
+    var currentSortMode: StateSort = StateSort.NUMBER
+    private var pokemonList: List<PokemonResponse> = emptyList()
+
 
     fun getPokemon(name: String) {
         viewModelScope.launch {
@@ -48,14 +51,29 @@ class PokeViewModel(val apiImpl: PokeApiImpl, application: PokeApplication): And
 
 
     fun getPokemons() {
-        _mainScreenState.update { it }
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.getPokemonsList().collect { result ->
-                _mainScreenState.update { it.copy(
+        if (pokemonList.isEmpty()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                repository.getPokemonsList().collect { result ->
                     pokemonList = result
-                ) }
+                    updateSortedPokemonList(currentSortMode)
+                }
             }
+        } else {
+            updateSortedPokemonList(currentSortMode)
         }
+    }
+
+    private fun updateSortedPokemonList(sortMode: StateSort) {
+        val sortedList = when (sortMode) {
+            StateSort.NUMBER -> pokemonList.sortedBy { it.order }
+            StateSort.NAME -> pokemonList.sortedBy { it.name }
+        }
+        _mainScreenState.update { it.copy(pokemonList = sortedList) }
+    }
+
+    fun updateSortMode(newSortMode: StateSort) {
+        currentSortMode = newSortMode
+        updateSortedPokemonList(newSortMode)
     }
 }
 

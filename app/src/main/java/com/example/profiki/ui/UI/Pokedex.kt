@@ -17,13 +17,15 @@ import com.example.profiki.Data.Model.StateSort
 
 @SuppressLint("SuspiciousIndentation", "StateFlowValueCalledInComposition")
 @Composable
-fun Pokedex(pokemons: List<PokemonResponse>, sortMode: StateSort, onClickPokemon: (String) -> Unit){
-    val sortedList = when (sortMode) {
-        StateSort.NUMBER -> pokemons.sortedBy { it.order }
-        StateSort.NAME -> pokemons.sortedBy { it.name }
-    }
+fun Pokedex(
+    pokemons: List<PokemonResponse>,
+    sortMode: StateSort,
+    onClickPokemon: (String) -> Unit,
+    onSortModeChange: (StateSort) -> Unit
+){
+
     Scaffold(
-            topBar = { AppTopBar{newSortMode -> onSortModeChange(newSortMode)}}
+            topBar = { AppTopBar(sortMode, onSortModeChange)}
         ){ innerPadding ->
             Column(
                 modifier = Modifier
@@ -32,13 +34,10 @@ fun Pokedex(pokemons: List<PokemonResponse>, sortMode: StateSort, onClickPokemon
             ) {
                 PokemonsCard(
                     onClickPokemon = onClickPokemon,
-                    pokemons = sortedList
+                    pokemons = pokemons
                     )
             }
         }
 }
-fun onSortModeChange(newSortMode: StateSort) {
-    onSortModeChange = {newSortMode}
-}
-private var onSortModeChange: (StateSort) -> Unit = {}
+
 
