@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -32,21 +31,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.profiki.Common.Abilities
+import com.example.profiki.Common.colorName
 import com.example.profiki.Common.ParameterBox
 import com.example.profiki.Common.StatName
 import com.example.profiki.Common.StatValue
+import com.example.profiki.Common.TypeRow
 import com.example.profiki.Common.loadImage
 import com.example.profiki.Common.pokemonNumber
 import com.example.profiki.Data.Model.PokemonResponse
+import com.example.profiki.Data.Model.SpeciesPokemonResponse
 import com.example.profiki.R
 import java.util.Locale
 
 
 @Composable
-fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit){
+fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit, species: SpeciesPokemonResponse?){
 
     Box(
-        modifier = Modifier.background(Color(184,184,184))
+        modifier = Modifier.background(Color(color = colorName(pokemon?.types)))
             .fillMaxHeight()
             .fillMaxWidth()
     ){
@@ -58,7 +60,7 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit){
 
         //TopNameRow
         Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth().padding(4.dp,20.dp).align(Alignment.TopCenter)
         ) {
@@ -215,35 +217,11 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit){
             modifier = Modifier.align(Alignment.TopCenter).padding(0.dp,100.dp,0.dp,0.dp).size(230.dp,230.dp).align(Alignment.TopCenter)
         )
             //Type Row
-            Row (
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
+            TypeRow(
                 modifier = Modifier.fillMaxWidth()
-                    .padding(20.dp,0.dp,20.dp,100.dp).align(Alignment.BottomCenter)
-            ){
-                Text("Type",
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    modifier = Modifier.padding(8.dp,0.dp)
-                        .background(
-                            Color.DarkGray,
-                            shape = RoundedCornerShape(18.dp)
-                        ).padding(8.dp, 4.dp)
-                )
-
-                Text("Type",
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    modifier = Modifier.padding(8.dp,0.dp)
-                        .background(
-                            Color.DarkGray,
-                            shape = RoundedCornerShape(18.dp)
-                        ).padding(8.dp, 4.dp)
-
-                )
-            }
+                    .padding(20.dp,0.dp,20.dp,100.dp).align(Alignment.BottomCenter),
+                pokemon = pokemon
+            )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,

@@ -27,7 +27,10 @@ import java.util.Locale
 
 
 @Composable
-fun PokemonsCard(pokemons: List<PokemonResponse>, onClickPokemon: (String)-> Unit) {
+fun PokemonsCard(
+    pokemons: List<PokemonResponse>,
+    onClickPokemon: (String)-> Unit,
+    searchText: String) {
 
     Card(
         colors = CardDefaults.cardColors(
@@ -47,11 +50,16 @@ fun PokemonsCard(pokemons: List<PokemonResponse>, onClickPokemon: (String)-> Uni
 
         ) {
             itemsIndexed(
-                pokemons
-            ) { index, pokemons ->
-                val imageBitmap = loadImage(pokemons.sprites.other.official_artwork.front_default)
+                pokemons.filter { pokemon ->
+                    pokemon.name.contains(
+                        searchText, ignoreCase = true)
+                            ||
+                    pokemon.order.toString().contains(searchText)
+                }
+            ) { _, pokemon ->
+                val imageBitmap = loadImage(pokemon.sprites.other.official_artwork.front_default)
                 Card(
-                    onClick = {onClickPokemon(pokemons.name)},
+                    onClick = {onClickPokemon(pokemon.name)},
                     colors = CardDefaults.cardColors(containerColor = Color.White),
                     modifier = Modifier
                         .padding(8.dp)
@@ -66,7 +74,7 @@ fun PokemonsCard(pokemons: List<PokemonResponse>, onClickPokemon: (String)-> Uni
                             .fillMaxHeight()
                     ) {
                         Text(
-                            text = pokemonNumber(pokemons.order),
+                            text = pokemonNumber(pokemon.order),
                             color = Color.Gray,
                             fontSize = 8.sp,
                             modifier = Modifier
@@ -94,7 +102,7 @@ fun PokemonsCard(pokemons: List<PokemonResponse>, onClickPokemon: (String)-> Uni
                                     .fillMaxHeight()
                             ) {
                                 Text(
-                                    text = pokemons.name.capitalize(Locale.ROOT),
+                                    text = pokemon.name.capitalize(Locale.ROOT),
                                     color = Color.Black,
                                     fontSize = 10.sp,
                                     modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 4.dp),

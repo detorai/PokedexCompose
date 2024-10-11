@@ -1,3 +1,5 @@
+@file:Suppress("NAME_SHADOWING", "UNUSED_EXPRESSION")
+
 package com.example.profiki.Common
 
 import androidx.compose.foundation.Image
@@ -26,6 +28,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.RadioButton
@@ -43,6 +46,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -54,12 +58,18 @@ import com.example.profiki.R
 
 
 @Composable
-fun AppTopBar(sortMode: StateSort, onSortModeChange: (StateSort) -> Unit){
+fun AppTopBar(
+    sortMode: StateSort,
+    onSortModeChange: (StateSort) -> Unit,
+    searchText: String,
+    onValueChange: (String)-> Unit,
+    clearText: () -> Unit
+){
     var sortMode by remember { mutableStateOf(StateSort.NUMBER) }
-    var text by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
     Column(modifier = Modifier.background(Color.Red) ) {
-        Row(modifier = Modifier.fillMaxWidth()
+        Row(modifier = Modifier
+            .fillMaxWidth()
             .background(Color.Red)
             .fillMaxHeight(0.08f),
             horizontalArrangement = Arrangement.Start,
@@ -67,60 +77,34 @@ fun AppTopBar(sortMode: StateSort, onSortModeChange: (StateSort) -> Unit){
             Image(
                 imageVector = ImageVector.vectorResource(R.drawable.pokeball),
                 contentDescription = "pokeball",
-                modifier = Modifier.padding(12.dp,0.dp, 0.dp, 12.dp).size(30.dp,30.dp)
+                modifier = Modifier
+                    .padding(16.dp, 0.dp, 0.dp, 16.dp)
+                    .size(30.dp, 30.dp)
             )
             Text("Pokédex",
                 fontSize = 32.sp,
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(16.dp, 0.dp, 0.dp, 8.dp ))
+                modifier = Modifier.padding(16.dp, 0.dp, 0.dp, 12.dp ))
         }
         Row(
-            modifier = Modifier.fillMaxWidth()
-                .background(Color.Red).fillMaxHeight(0.08f),
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.Red)
+                .fillMaxHeight(0.08f),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically)
         {
-            OutlinedTextField(
-                textStyle = TextStyle(
-                    textAlign = TextAlign.Start),
-                modifier = Modifier.padding(12.dp,0.dp, 16.dp, 24.dp).height(45.dp).weight(1f),
-                shape = RoundedCornerShape(20.dp),
-                value = text,
-                onValueChange = {text = it},
-                placeholder = {
-                    Text("Search",
-                        color = Color.Gray,
-                        modifier = Modifier.align(Alignment.CenterVertically),
-                        textAlign = TextAlign.Start,
-                        fontSize = 14.sp
-                    )
-                },
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "Search Icon",
-                        tint = Color.Red)
-                },
-                trailingIcon = {
-                    Icon(
-                        modifier = Modifier.clickable {
-                            if (text.isNotEmpty()) {
-                                text = ""
-                            }
-                            else {
-
-                            }
-                        },
-                        imageVector = Icons.Default.Clear,
-                        contentDescription = "Close Icon",
-                        tint = Color.Red
-                    )
-                },
-                colors = OutlinedTextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.White,
-                    focusedContainerColor = Color.White
-                )
+            SearchBar(
+                searchText = searchText,
+                onValueChange = onValueChange,
+                modifier = Modifier
+                    .padding(16.dp, 0.dp, 16.dp, 20.dp)
+                    .height(45.dp)
+                    .weight(1f),
+                clearText = {
+                     clearText
+                }
             )
             Button(onClick = { active = true},
                 shape = CircleShape,
@@ -128,9 +112,13 @@ fun AppTopBar(sortMode: StateSort, onSortModeChange: (StateSort) -> Unit){
                     contentColor = Color.Red,
                     containerColor = Color.White),
                 contentPadding = PaddingValues(0.dp),
-                modifier = Modifier.padding(0.dp, 0.dp, 12.dp, 24.dp).size(45.dp)
+                modifier = Modifier
+                    .padding(0.dp, 0.dp, 12.dp, 24.dp)
+                    .size(45.dp)
             ) {
-                Box(modifier = Modifier.fillMaxHeight().fillMaxWidth(),
+                Box(modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
                     contentAlignment = Alignment.Center){
                     Image(
                         modifier = Modifier.size(15.dp),
@@ -147,7 +135,9 @@ fun AppTopBar(sortMode: StateSort, onSortModeChange: (StateSort) -> Unit){
 
                 ) {
                     Row(
-                        modifier = Modifier.fillMaxHeight(0.5f).fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxHeight(0.5f)
+                            .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text("Sort by:",
@@ -164,10 +154,12 @@ fun AppTopBar(sortMode: StateSort, onSortModeChange: (StateSort) -> Unit){
                         modifier = Modifier
                             .fillMaxWidth()
                             .fillMaxHeight(0.7f)
-                            .padding(4.dp,4.dp,4.dp,0.dp)
+                            .padding(4.dp, 4.dp, 4.dp, 0.dp)
                     ) {
                         Row(
-                            modifier = Modifier.fillMaxWidth().fillMaxHeight(0.35f),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight(0.35f),
                             horizontalArrangement = Arrangement.Start,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -189,7 +181,9 @@ fun AppTopBar(sortMode: StateSort, onSortModeChange: (StateSort) -> Unit){
                             )
                         }
                         Row(
-                            modifier = Modifier.fillMaxWidth().fillMaxHeight(0.35f),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight(0.35f),
                             horizontalArrangement = Arrangement.Start,
                             verticalAlignment = Alignment.CenterVertically
                         ) {

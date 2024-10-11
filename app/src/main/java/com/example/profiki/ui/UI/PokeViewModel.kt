@@ -1,12 +1,14 @@
 package com.example.profiki.ui.UI
 
 import android.app.Application
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.profiki.Data.Model.MainScreenState
 import com.example.profiki.Data.Model.PokemonItem
 import com.example.profiki.Data.Model.PokemonResponse
+import com.example.profiki.Data.Model.SpeciesPokemonResponse
 import com.example.profiki.Data.Model.StateSort
 import com.example.profiki.Data.PokeApiImpl
 import com.example.profiki.PokeApplication
@@ -26,6 +28,9 @@ class PokeViewModel(val apiImpl: PokeApiImpl, application: PokeApplication): And
 
     private val repository by lazy { (application).repository }
 
+    private val _searchText = MutableStateFlow("")
+    val searchText = _searchText.asStateFlow()
+
     private val _mainScreenState = MutableStateFlow(MainScreenState())
     val mainScreenState = _mainScreenState.asStateFlow()
 
@@ -35,6 +40,26 @@ class PokeViewModel(val apiImpl: PokeApiImpl, application: PokeApplication): And
     var currentSortMode: StateSort = StateSort.NUMBER
     private var pokemonList: List<PokemonResponse> = emptyList()
 
+    private val _pokemonSpecies = MutableStateFlow<SpeciesPokemonResponse?>(null)
+    val pokemonSpecies = _pokemonSpecies.asStateFlow()
+
+
+    fun onValueChange(text: String){
+        _searchText.value = text
+    }
+
+    fun getSpeciesByName(name: String){
+        viewModelScope.launch {
+            try {
+                val species = apiImpl.getSpeciesByName(name)
+                if (species.isSuccessful) {
+                    _pokemonSpecies.emit(species.body())
+                }
+            } catch (e: Exception) {
+                println("Error getting pokemon: ${e.message}")
+            }
+        }
+    }
 
     fun getPokemon(name: String) {
         viewModelScope.launch {

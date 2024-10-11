@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.profiki.Common.AppTopBar
@@ -21,11 +25,20 @@ fun Pokedex(
     pokemons: List<PokemonResponse>,
     sortMode: StateSort,
     onClickPokemon: (String) -> Unit,
-    onSortModeChange: (StateSort) -> Unit
+    onSortModeChange: (StateSort) -> Unit,
+    searchText: String,
+    onSearchTextChange: (String) -> Unit,
+    onClearSearch: () -> Unit
 ){
-
+    /*val searchText by remember { mutableStateOf("")}*/
     Scaffold(
-            topBar = { AppTopBar(sortMode, onSortModeChange)}
+            topBar = { AppTopBar(
+                sortMode = sortMode,
+                onSortModeChange = onSortModeChange,
+                clearText = onClearSearch,
+                onValueChange = onSearchTextChange,
+                searchText = searchText
+                )}
         ){ innerPadding ->
             Column(
                 modifier = Modifier
@@ -34,8 +47,10 @@ fun Pokedex(
             ) {
                 PokemonsCard(
                     onClickPokemon = onClickPokemon,
-                    pokemons = pokemons
-                    )
+                    pokemons = pokemons,
+                    searchText = searchText
+
+                )
             }
         }
 }

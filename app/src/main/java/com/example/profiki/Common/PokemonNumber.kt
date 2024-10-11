@@ -1,5 +1,3 @@
-
-
 package com.example.profiki.Common
 
 fun pokemonNumber(order: Int?): String {
