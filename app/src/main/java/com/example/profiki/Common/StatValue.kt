@@ -25,10 +25,10 @@ import com.example.profiki.R
 import org.w3c.dom.Text
 
 @Composable
-fun StatValue(stateValue: PokemonResponse?,modifier: Modifier ) {
+fun StatValue(stateValue: PokemonResponse?,modifier: Modifier, color: Color, colorDop: Color ) {
 
     LazyColumn (
-        modifier = modifier.padding(0.dp, 0.dp, 16.dp, 0.dp ),
+        modifier = modifier.padding(0.dp, 0.dp, 16.dp, 0.dp),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.SpaceAround,
     ) {
@@ -48,8 +48,8 @@ fun StatValue(stateValue: PokemonResponse?,modifier: Modifier ) {
             itemsIndexed(stateValue.stats){index, stats ->
                 LinearProgressIndicator(
                     progress = { stats.base_stat.toFloat()/100 },
-                    color = Color.Gray,
-                    trackColor = Color.White
+                    color = color,
+                    trackColor = colorDop
                 )
             }
         }

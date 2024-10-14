@@ -31,13 +31,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.profiki.Common.Abilities
+import com.example.profiki.Common.FlavorTextEn
 import com.example.profiki.Common.colorName
 import com.example.profiki.Common.ParameterBox
 import com.example.profiki.Common.StatName
 import com.example.profiki.Common.StatValue
 import com.example.profiki.Common.TypeRow
+import com.example.profiki.Common.colorDopName
+import com.example.profiki.Common.colorType
 import com.example.profiki.Common.loadImage
 import com.example.profiki.Common.pokemonNumber
+import com.example.profiki.Data.Model.FlavorText
 import com.example.profiki.Data.Model.PokemonResponse
 import com.example.profiki.Data.Model.SpeciesPokemonResponse
 import com.example.profiki.R
@@ -48,13 +52,13 @@ import java.util.Locale
 fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit, species: SpeciesPokemonResponse?){
 
     Box(
-        modifier = Modifier.background(Color(color = colorName(pokemon?.types)))
+        modifier = Modifier.background(color = colorName(pokemon))
             .fillMaxHeight()
             .fillMaxWidth()
     ){
         Image(imageVector = ImageVector.vectorResource(R.drawable.pokeball),
             contentDescription = "pokeball",
-            colorFilter = ColorFilter.tint(color = Color.LightGray),
+            colorFilter = ColorFilter.tint(color = colorDopName(pokemon)),
             modifier = Modifier.size(246.dp,248.dp).padding(0.dp,8.dp, 9.dp, 0.dp).align(Alignment.TopEnd),
             )
 
@@ -108,7 +112,7 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit, species: Species
                 modifier = Modifier.fillMaxWidth().padding(20.dp,92.dp,20.dp,0.dp)
             ) {
                 Text("About",
-                    color = Color.Gray,
+                    color = colorName(pokemon),
                     fontSize = 19.sp,
                     fontWeight = FontWeight.Bold
                     )
@@ -164,11 +168,11 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit, species: Species
             }
             //About Row
             Row(
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth().padding(20.dp,16.dp)
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.Bottom,
+                modifier = Modifier.padding(20.dp,16.dp).fillMaxWidth()
             ) {
-                Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc iaculis eros vitae tellus condimentum maximus sit amet in eros.",
+                Text( text = FlavorTextEn(species),
                     fontSize = 15.sp)
             }
 
@@ -179,9 +183,10 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit, species: Species
                 modifier = Modifier.fillMaxWidth().padding(20.dp,16.dp)
             ) {
                 Text("Base Stats",
-                    color = Color.Gray,
+                    color = colorName(pokemon),
                     fontSize = 19.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    softWrap = false
                     )
             }
 
@@ -192,7 +197,8 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit, species: Species
                 modifier = Modifier.fillMaxWidth().fillMaxHeight(0.7f).padding(0.dp,16.dp)
             ) {
                 StatName(
-                    modifier = Modifier.fillMaxHeight().padding(20.dp, 0.dp, 16.dp, 0.dp)
+                    modifier = Modifier.fillMaxHeight().padding(20.dp, 0.dp, 16.dp, 0.dp),
+                    color = colorName(pokemon)
                 )
 
                 Image(
@@ -201,7 +207,11 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit, species: Species
                     modifier = Modifier.fillMaxHeight().padding(0.dp, 0.dp, 16.dp, 0.dp),
                     contentScale = ContentScale.FillBounds
                 )
-                StatValue(stateValue = pokemon,modifier = Modifier. fillMaxHeight())
+                StatValue(
+                    stateValue = pokemon,
+                    modifier = Modifier.fillMaxHeight(),
+                    color = colorName(pokemon),
+                    colorDop = colorDopName(pokemon))
 
             }
         }

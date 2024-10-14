@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.example.profiki.Data.Model.PokemonResponse
 
 @Composable
-fun TypeRow(modifier: Modifier, pokemon: PokemonResponse?){
+fun TypeRow(modifier: Modifier, pokemon: PokemonResponse?, ){
     LazyRow(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
@@ -37,7 +37,7 @@ fun TypeRow(modifier: Modifier, pokemon: PokemonResponse?){
                     color = Color.White,
                     modifier = Modifier.padding(8.dp, 0.dp)
                         .background(
-                            Color.DarkGray,
+                            color = colorType(type),
                             shape = RoundedCornerShape(18.dp)
                         ).padding(8.dp, 4.dp)
                 )
