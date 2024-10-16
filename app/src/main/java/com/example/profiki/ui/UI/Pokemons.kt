@@ -46,6 +46,7 @@ import com.example.profiki.Data.Model.FlavorText
 import com.example.profiki.Data.Model.PokemonResponse
 import com.example.profiki.Data.Model.SpeciesPokemonResponse
 import com.example.profiki.R
+import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.Locale
 
 
@@ -53,26 +54,35 @@ import java.util.Locale
 fun Pokemons(
     pokemon: PokemonResponse?,
     species: SpeciesPokemonResponse?,
+    currentIndex: Int,
+    pokemonList: List<PokemonResponse>,
     onClickBack: () -> Unit,
     onClickPrev: () -> Unit,
     onClickNext: () -> Unit){
 
     Box(
-        modifier = Modifier.background(color = colorName(pokemon))
+        modifier = Modifier
+            .background(color = colorName(pokemon))
             .fillMaxHeight()
             .fillMaxWidth()
     ){
         Image(imageVector = ImageVector.vectorResource(R.drawable.pokeball),
             contentDescription = "pokeball",
             colorFilter = ColorFilter.tint(color = colorDopName(pokemon)),
-            modifier = Modifier.size(246.dp,248.dp).padding(0.dp,8.dp, 9.dp, 0.dp).align(Alignment.TopEnd),
+            modifier = Modifier
+                .size(246.dp, 248.dp)
+                .padding(0.dp, 8.dp, 9.dp, 0.dp)
+                .align(Alignment.TopEnd),
             )
 
         //TopNameRow
         Row(
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth().padding(4.dp,20.dp).align(Alignment.TopCenter)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(4.dp, 20.dp)
+                .align(Alignment.TopCenter)
         ) {
             IconButton(
                 onClick = onClickBack
@@ -115,7 +125,9 @@ fun Pokemons(
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth().padding(20.dp,92.dp,20.dp,0.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp, 92.dp, 20.dp, 0.dp)
             ) {
                 Text("About",
                     color = colorName(pokemon),
@@ -128,10 +140,15 @@ fun Pokemons(
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth(1f).fillMaxHeight(0.2f).padding(0.dp,16.dp)
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .fillMaxHeight(0.2f)
+                    .padding(0.dp, 16.dp)
             ) {
 
-                ParameterBox(modifier = Modifier.fillMaxHeight().fillMaxWidth(0.2f),
+                ParameterBox(modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(0.2f),
                     parameterName = "Weight",
                     parameterValue = "${pokemon?.weight?.toFloat()?.div(10)} kg",
                     parameterImage = R.drawable.weight
@@ -143,7 +160,9 @@ fun Pokemons(
                     modifier = Modifier.fillMaxHeight(),
                     contentScale = ContentScale.FillBounds
                 )
-                ParameterBox(modifier = Modifier.fillMaxHeight().fillMaxWidth(0.2f),
+                ParameterBox(modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(0.2f),
                     parameterName = "Height",
                     parameterValue = "${pokemon?.height?.toFloat()?.div(10)} m",
                     parameterImage = R.drawable.straighten
@@ -159,7 +178,8 @@ fun Pokemons(
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
-                        .fillMaxHeight().fillMaxWidth(0.35f)
+                        .fillMaxHeight()
+                        .fillMaxWidth(0.35f)
                 ) {
                    Abilities(pokemon)
                     Row(
@@ -176,7 +196,9 @@ fun Pokemons(
             Row(
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.Bottom,
-                modifier = Modifier.padding(20.dp,16.dp).fillMaxWidth(),
+                modifier = Modifier
+                    .padding(20.dp, 16.dp)
+                    .fillMaxWidth(),
             ) {
                 Text( text = FlavorTextEn(species),
                     fontSize = 15.sp,
@@ -187,7 +209,9 @@ fun Pokemons(
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth().padding(20.dp,16.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp, 16.dp)
             ) {
                 Text("Base Stats",
                     color = colorName(pokemon),
@@ -201,17 +225,24 @@ fun Pokemons(
             Row(
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(0.7f).padding(0.dp,16.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.7f)
+                    .padding(0.dp, 16.dp)
             ) {
                 StatName(
-                    modifier = Modifier.fillMaxHeight().padding(20.dp, 0.dp, 16.dp, 0.dp),
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(20.dp, 0.dp, 16.dp, 0.dp),
                     color = colorName(pokemon)
                 )
 
                 Image(
                     imageVector = ImageVector.vectorResource(R.drawable.divider),
                     contentDescription = "divider",
-                    modifier = Modifier.fillMaxHeight().padding(0.dp, 0.dp, 16.dp, 0.dp),
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(0.dp, 0.dp, 16.dp, 0.dp),
                     contentScale = ContentScale.FillBounds
                 )
                 StatValue(
@@ -226,42 +257,62 @@ fun Pokemons(
         //PokemonImage
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxWidth().fillMaxHeight(0.5f)
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.5f)
         ){
         Image(
             bitmap = loadImage(pokemon?.sprites?.other?.official_artwork?.front_default.toString()),
             contentDescription = "PokemonImage",
-            modifier = Modifier.align(Alignment.TopCenter).padding(0.dp,100.dp,0.dp,0.dp).size(230.dp,230.dp).align(Alignment.TopCenter)
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(0.dp, 100.dp, 0.dp, 0.dp)
+                .size(230.dp, 230.dp)
+                .align(Alignment.TopCenter)
         )
             //Type Row
             TypeRow(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(20.dp,0.dp,20.dp,100.dp).align(Alignment.BottomCenter),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp, 0.dp, 20.dp, 100.dp)
+                    .align(Alignment.BottomCenter),
                 pokemon = pokemon
             )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth().align(Alignment.Center).padding(18.dp, 0.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.Center)
+                    .padding(18.dp, 0.dp)
             ) {
-                IconButton(
-                    onClick = onClickPrev) {
-                    Icon(
-                        imageVector = Icons.Default.KeyboardArrowLeft,
-                        contentDescription = "Back",
-                        tint = Color.White,
-                        modifier = Modifier.size(30.dp)
-                    )
+                Column {
+                    if (currentIndex > 0) {
+                        IconButton(
+                            onClick = onClickPrev,
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowLeft,
+                                contentDescription = "Back",
+                                tint = Color.White,
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
+                    }
                 }
-                IconButton(
-                    onClick =onClickNext
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.KeyboardArrowRight,
-                        contentDescription = "Next",
-                        tint = Color.White,
-                        modifier = Modifier.size(30.dp)
-                    )
+                Column {
+                    if (currentIndex < pokemonList.size - 1) {
+                        IconButton(
+                            onClick = onClickNext,
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowRight,
+                                contentDescription = "Next",
+                                tint = Color.White,
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
+                    }
                 }
             }
         }

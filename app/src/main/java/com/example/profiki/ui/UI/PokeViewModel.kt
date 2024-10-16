@@ -34,17 +34,11 @@ class PokeViewModel(val apiImpl: PokeApiImpl, application: PokeApplication): And
     private val _mainScreenState = MutableStateFlow(MainScreenState())
     val mainScreenState = _mainScreenState.asStateFlow()
 
-    private val _pokemon = MutableStateFlow<PokemonResponse?>(null)
-    val pokemon: StateFlow<PokemonResponse?> = _pokemon.asStateFlow()
-
     var currentSortMode: StateSort = StateSort.NUMBER
+
     private val _pokemonList = MutableStateFlow<List<PokemonResponse>>(emptyList())
     val pokemonList = _pokemonList.asStateFlow()
 
-    private val _pokemonSpecies = MutableStateFlow<SpeciesPokemonResponse?>(null)
-    val pokemonSpecies = _pokemonSpecies.asStateFlow()
-
-    private val _currentIndex = MutableStateFlow(0)
 
 
 
@@ -79,69 +73,6 @@ class PokeViewModel(val apiImpl: PokeApiImpl, application: PokeApplication): And
             StateSort.NAME -> _pokemonList.value.sortedBy { it.name }
         }
         _mainScreenState.update { it.copy(pokemonList = sortedList) }
-    }
-
-
-    //Получение описания
-
-    fun getSpeciesByName(name: String) {
-        viewModelScope.launch {
-            try {
-                val species = apiImpl.getSpeciesByName(name)
-                if (species.isSuccessful) {
-                    _pokemonSpecies.emit(species.body())
-                }
-            } catch (e: Exception) {
-                println("Error getting pokemon-species: ${e.message}")
-            }
-        }
-    }
-
-
-    //Получение данных о конкретном покемоне
-
-    private fun getPokemon(name: String) {
-        viewModelScope.launch {
-            try {
-                val response = apiImpl.getPokemon(name)
-                if (response.isSuccessful) {
-                    _pokemon.emit(response.body())
-                }
-            } catch (e: Exception) {
-                println("Error getting pokemon: ${e.message}")
-            }
-        }
-    }
-
-    fun getSpecificPokemon() {
-        if (_currentIndex.value in _pokemonList.value.indices) {
-            val pokemonName = _pokemonList.value[_currentIndex.value].name
-            getPokemon(pokemonName)
-            getSpeciesByName(pokemonName)
-        } else {
-            println("Некорректный индекс: ${_currentIndex.value}. Доступные индексы: 0 to ${_pokemonList.value.size - 1}")
-        }
-    }
-
-
-    // Переключение между элементами списка
-
-    fun nextPokemon() {
-        val currentIdx = _currentIndex.value
-        if (currentIdx < _pokemonList.value.size - 1) {
-            _currentIndex.value = currentIdx + 1
-        }
-    }
-
-    fun prevPokemon() {
-        val currentIdx = _currentIndex.value
-        if (currentIdx > 0) {
-            _currentIndex.value = currentIdx - 1
-        }
-    }
-
-    fun updateCurrentIndex(index: Int) {
-        _currentIndex.value = index
     }
 }
 

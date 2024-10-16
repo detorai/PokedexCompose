@@ -13,10 +13,12 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
+import com.example.profiki.Data.Model.PokemonResponse
 import com.example.profiki.Data.Model.StateSort
 import com.example.profiki.Data.PokeApiImpl
 import com.example.profiki.Data.PokeService
 import com.example.profiki.PokeApplication
+import com.example.profiki.ui.UI.PokeAboutViewModel
 import com.example.profiki.ui.UI.Pokedex
 import com.example.profiki.ui.UI.Pokemons
 import com.example.profiki.ui.UI.PokeViewModel
@@ -43,8 +45,7 @@ class HomeScreen: Screen {
         Pokedex(
             pokemons = pokemonsAbout,
             onClickPokemon = {index ->
-                viewModel.updateCurrentIndex(index)
-                navigator?.push(PokemonScreen(index))},
+                navigator?.push(PokemonScreen(index, pokemonsAbout))},
             sortMode = viewModel.currentSortMode,
             onSortModeChange = viewModel::updateSortMode,
             searchText = searchText,
@@ -54,18 +55,20 @@ class HomeScreen: Screen {
     }
 }
 
-class PokemonScreen(private val index: Int): Screen {
+class PokemonScreen(private val index: Int, private val pokemonList: List<PokemonResponse>): Screen {
 
     override val key: ScreenKey = uniqueScreenKey
 
     private val apiImpl = PokeApiImpl(PokeService.service)
-    private val viewModel = PokeViewModel(apiImpl, PokeApplication())
+    private val viewModel = PokeAboutViewModel(apiImpl, pokemonList)
 
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
         val pokemon = viewModel.pokemon.collectAsState().value
         val species = viewModel.pokemonSpecies.collectAsState().value
+        val currentIndex = viewModel.currentIndex.collectAsState().value
+
 
         LaunchedEffect(index) {
             viewModel.updateCurrentIndex(index)
@@ -82,7 +85,9 @@ class PokemonScreen(private val index: Int): Screen {
                 viewModel.nextPokemon()
                 viewModel.getSpecificPokemon()
                           },
-            species = species
+            species = species,
+            currentIndex = currentIndex,
+            pokemonList = pokemonList
         )
     }
 }
