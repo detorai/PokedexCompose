@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.profiki.Common.Abilities
@@ -49,7 +50,12 @@ import java.util.Locale
 
 
 @Composable
-fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit, species: SpeciesPokemonResponse?){
+fun Pokemons(
+    pokemon: PokemonResponse?,
+    species: SpeciesPokemonResponse?,
+    onClickBack: () -> Unit,
+    onClickPrev: () -> Unit,
+    onClickNext: () -> Unit){
 
     Box(
         modifier = Modifier.background(color = colorName(pokemon))
@@ -153,7 +159,7 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit, species: Species
                     verticalArrangement = Arrangement.SpaceBetween,
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
-                        .fillMaxHeight().fillMaxWidth(0.3f)
+                        .fillMaxHeight().fillMaxWidth(0.35f)
                 ) {
                    Abilities(pokemon)
                     Row(
@@ -170,10 +176,11 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit, species: Species
             Row(
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.Bottom,
-                modifier = Modifier.padding(20.dp,16.dp).fillMaxWidth()
+                modifier = Modifier.padding(20.dp,16.dp).fillMaxWidth(),
             ) {
                 Text( text = FlavorTextEn(species),
-                    fontSize = 15.sp)
+                    fontSize = 15.sp,
+                    modifier = Modifier.fillMaxWidth())
             }
 
             //Text 2 Row
@@ -237,18 +244,25 @@ fun Pokemons(pokemon: PokemonResponse?, onClickBack: ()-> Unit, species: Species
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth().align(Alignment.Center).padding(18.dp, 0.dp)
             ) {
-                Icon(
+                IconButton(
+                    onClick = onClickPrev) {
+                    Icon(
                         imageVector = Icons.Default.KeyboardArrowLeft,
                         contentDescription = "Back",
                         tint = Color.White,
                         modifier = Modifier.size(30.dp)
                     )
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowRight,
-                    contentDescription = "Next",
-                    tint = Color.White,
-                    modifier = Modifier.size(30.dp)
-                )
+                }
+                IconButton(
+                    onClick =onClickNext
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowRight,
+                        contentDescription = "Next",
+                        tint = Color.White,
+                        modifier = Modifier.size(30.dp)
+                    )
+                }
             }
         }
     }

@@ -11,5 +11,5 @@ fun FlavorTextEn(species: SpeciesPokemonResponse?): String {
         return species?.flavor_text_entries?.firstOrNull {
             it.language.name.contains("en")
         }
-            ?.flavor_text.toString()
+            ?.flavor_text?.replace("\n", " ").toString()
 }

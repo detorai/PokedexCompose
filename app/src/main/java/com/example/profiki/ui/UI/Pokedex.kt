@@ -24,13 +24,12 @@ import com.example.profiki.Data.Model.StateSort
 fun Pokedex(
     pokemons: List<PokemonResponse>,
     sortMode: StateSort,
-    onClickPokemon: (String) -> Unit,
+    onClickPokemon: (Int) -> Unit,
     onSortModeChange: (StateSort) -> Unit,
     searchText: String,
     onSearchTextChange: (String) -> Unit,
     onClearSearch: () -> Unit
 ){
-    /*val searchText by remember { mutableStateOf("")}*/
     Scaffold(
             topBar = { AppTopBar(
                 sortMode = sortMode,

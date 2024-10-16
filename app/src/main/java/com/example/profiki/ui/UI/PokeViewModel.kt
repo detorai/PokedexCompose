@@ -38,17 +38,53 @@ class PokeViewModel(val apiImpl: PokeApiImpl, application: PokeApplication): And
     val pokemon: StateFlow<PokemonResponse?> = _pokemon.asStateFlow()
 
     var currentSortMode: StateSort = StateSort.NUMBER
-    private var pokemonList: List<PokemonResponse> = emptyList()
+    private val _pokemonList = MutableStateFlow<List<PokemonResponse>>(emptyList())
+    val pokemonList = _pokemonList.asStateFlow()
 
     private val _pokemonSpecies = MutableStateFlow<SpeciesPokemonResponse?>(null)
     val pokemonSpecies = _pokemonSpecies.asStateFlow()
 
+    private val _currentIndex = MutableStateFlow(0)
 
-    fun onValueChange(text: String){
+
+
+    //Сортировка
+
+    fun getPokemons() {
+        if (_pokemonList.value.isEmpty()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                repository.getPokemonsList().collect { result ->
+                    _pokemonList.value = result
+                    updateSortedPokemonList(currentSortMode)
+                }
+            }
+        } else {
+            updateSortedPokemonList(currentSortMode)
+        }
+    }
+
+    fun onValueChange(text: String) {
         _searchText.value = text
     }
 
-    fun getSpeciesByName(name: String){
+
+    fun updateSortMode(newSortMode: StateSort) {
+        currentSortMode = newSortMode
+        updateSortedPokemonList(newSortMode)
+    }
+
+    private fun updateSortedPokemonList(sortMode: StateSort) {
+        val sortedList = when (sortMode) {
+            StateSort.NUMBER -> _pokemonList.value.sortedBy { it.order }
+            StateSort.NAME -> _pokemonList.value.sortedBy { it.name }
+        }
+        _mainScreenState.update { it.copy(pokemonList = sortedList) }
+    }
+
+
+    //Получение описания
+
+    fun getSpeciesByName(name: String) {
         viewModelScope.launch {
             try {
                 val species = apiImpl.getSpeciesByName(name)
@@ -56,12 +92,15 @@ class PokeViewModel(val apiImpl: PokeApiImpl, application: PokeApplication): And
                     _pokemonSpecies.emit(species.body())
                 }
             } catch (e: Exception) {
-                println("Error getting pokemon: ${e.message}")
+                println("Error getting pokemon-species: ${e.message}")
             }
         }
     }
 
-    fun getPokemon(name: String) {
+
+    //Получение данных о конкретном покемоне
+
+    private fun getPokemon(name: String) {
         viewModelScope.launch {
             try {
                 val response = apiImpl.getPokemon(name)
@@ -74,32 +113,37 @@ class PokeViewModel(val apiImpl: PokeApiImpl, application: PokeApplication): And
         }
     }
 
-
-    fun getPokemons() {
-        if (pokemonList.isEmpty()) {
-            viewModelScope.launch(Dispatchers.IO) {
-                repository.getPokemonsList().collect { result ->
-                    pokemonList = result
-                    updateSortedPokemonList(currentSortMode)
-                }
-            }
+    fun getSpecificPokemon() {
+        if (_currentIndex.value in _pokemonList.value.indices) {
+            val pokemonName = _pokemonList.value[_currentIndex.value].name
+            getPokemon(pokemonName)
+            getSpeciesByName(pokemonName)
         } else {
-            updateSortedPokemonList(currentSortMode)
+            println("Некорректный индекс: ${_currentIndex.value}. Доступные индексы: 0 to ${_pokemonList.value.size - 1}")
         }
     }
 
-    private fun updateSortedPokemonList(sortMode: StateSort) {
-        val sortedList = when (sortMode) {
-            StateSort.NUMBER -> pokemonList.sortedBy { it.order }
-            StateSort.NAME -> pokemonList.sortedBy { it.name }
+
+    // Переключение между элементами списка
+
+    fun nextPokemon() {
+        val currentIdx = _currentIndex.value
+        if (currentIdx < _pokemonList.value.size - 1) {
+            _currentIndex.value = currentIdx + 1
         }
-        _mainScreenState.update { it.copy(pokemonList = sortedList) }
     }
 
-    fun updateSortMode(newSortMode: StateSort) {
-        currentSortMode = newSortMode
-        updateSortedPokemonList(newSortMode)
+    fun prevPokemon() {
+        val currentIdx = _currentIndex.value
+        if (currentIdx > 0) {
+            _currentIndex.value = currentIdx - 1
+        }
+    }
+
+    fun updateCurrentIndex(index: Int) {
+        _currentIndex.value = index
     }
 }
+
 
 

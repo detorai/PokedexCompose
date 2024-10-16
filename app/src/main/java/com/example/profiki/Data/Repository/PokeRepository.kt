@@ -5,7 +5,7 @@ import com.example.profiki.Data.PokeApiImpl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class PokeRepository(val apiImpl: PokeApiImpl) {
+class PokeRepository(private val apiImpl: PokeApiImpl) {
     fun getPokemonsList(): Flow<List<PokemonResponse>> = flow {
         val result = apiImpl.getPokemons()
         val pokemonList = mutableListOf<PokemonResponse>()
@@ -18,7 +18,6 @@ class PokeRepository(val apiImpl: PokeApiImpl) {
                     pokemonList.add(pokemon)
                 }
             }
-
         }
         emit(pokemonList)
     }

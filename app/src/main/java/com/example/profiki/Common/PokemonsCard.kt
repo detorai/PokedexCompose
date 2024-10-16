@@ -29,7 +29,7 @@ import java.util.Locale
 @Composable
 fun PokemonsCard(
     pokemons: List<PokemonResponse>,
-    onClickPokemon: (String)-> Unit,
+    onClickPokemon: (Int)-> Unit,
     searchText: String) {
 
     Card(
@@ -56,10 +56,10 @@ fun PokemonsCard(
                             ||
                     pokemon.order.toString().contains(searchText)
                 }
-            ) { _, pokemon ->
+            ) { index, pokemon ->
                 val imageBitmap = loadImage(pokemon.sprites.other.official_artwork.front_default)
                 Card(
-                    onClick = {onClickPokemon(pokemon.name)},
+                    onClick = {onClickPokemon(index)},
                     colors = CardDefaults.cardColors(containerColor = Color.White),
                     modifier = Modifier
                         .padding(8.dp)

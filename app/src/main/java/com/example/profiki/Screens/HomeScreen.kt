@@ -3,6 +3,7 @@ package com.example.profiki.Screens
 import android.annotation.SuppressLint
 import android.app.Application
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,12 +35,16 @@ class HomeScreen: Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
-        viewModel.getPokemons()
+        LaunchedEffect(Unit) {
+            viewModel.getPokemons()
+        }
         val searchText by viewModel.searchText.collectAsState()
         val pokemonsAbout = viewModel.mainScreenState.collectAsState().value.pokemonList
         Pokedex(
             pokemons = pokemonsAbout,
-            onClickPokemon = {name -> navigator?.push(PokemonScreen(name))},
+            onClickPokemon = {index ->
+                viewModel.updateCurrentIndex(index)
+                navigator?.push(PokemonScreen(index))},
             sortMode = viewModel.currentSortMode,
             onSortModeChange = viewModel::updateSortMode,
             searchText = searchText,
@@ -48,7 +53,8 @@ class HomeScreen: Screen {
             )
     }
 }
-class PokemonScreen(val name: String): Screen {
+
+class PokemonScreen(private val index: Int): Screen {
 
     override val key: ScreenKey = uniqueScreenKey
 
@@ -58,13 +64,24 @@ class PokemonScreen(val name: String): Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.current
-        viewModel.getPokemon(name)
-        viewModel.getSpeciesByName(name)
         val pokemon = viewModel.pokemon.collectAsState().value
         val species = viewModel.pokemonSpecies.collectAsState().value
+
+        LaunchedEffect(index) {
+            viewModel.updateCurrentIndex(index)
+            viewModel.getSpecificPokemon()
+        }
         Pokemons(
             pokemon = pokemon,
             onClickBack = { navigator?.pop() },
+            onClickPrev = {
+                viewModel.prevPokemon()
+                viewModel.getSpecificPokemon()
+                          },
+            onClickNext = {
+                viewModel.nextPokemon()
+                viewModel.getSpecificPokemon()
+                          },
             species = species
         )
     }
