@@ -1,6 +1,5 @@
-package com.example.profiki.Common
+package com.example.profiki.ui.UI.Pokemons.PokemonsComponents
 
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed

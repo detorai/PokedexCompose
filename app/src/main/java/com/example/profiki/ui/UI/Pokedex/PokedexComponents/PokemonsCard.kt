@@ -1,4 +1,4 @@
-package com.example.profiki.Common
+package com.example.profiki.ui.UI.Pokedex.PokedexComponents
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.profiki.Common.loadImage
+import com.example.profiki.Common.pokemonNumber
 import com.example.profiki.Data.Model.PokemonResponse
 import java.util.Locale
 

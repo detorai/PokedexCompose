@@ -1,10 +1,5 @@
-package com.example.profiki.Common
+package com.example.profiki.ui.UI.Pokemons.PokemonsComponents
 
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.sp
-import com.example.profiki.Data.Model.FlavorText
-import com.example.profiki.Data.Model.PokemonResponse
 import com.example.profiki.Data.Model.SpeciesPokemonResponse
 
 fun FlavorTextEn(species: SpeciesPokemonResponse?): String {

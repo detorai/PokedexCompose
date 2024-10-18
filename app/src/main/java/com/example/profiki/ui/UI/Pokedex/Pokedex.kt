@@ -10,8 +10,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.profiki.Common.AppTopBar
-import com.example.profiki.Common.PokemonsCard
+import com.example.profiki.ui.UI.Pokedex.PokedexComponents.AppTopBar
+import com.example.profiki.ui.UI.Pokedex.PokedexComponents.PokemonsCard
 import com.example.profiki.Data.Model.PokemonResponse
 import com.example.profiki.Data.Model.StateSort
 
@@ -19,7 +19,6 @@ import com.example.profiki.Data.Model.StateSort
 @Composable
 fun Pokedex(
     pokemons: List<PokemonResponse>,
-    sortMode: StateSort,
     onClickPokemon: (Int) -> Unit,
     onSortModeChange: (StateSort) -> Unit,
     searchText: String,
@@ -28,12 +27,12 @@ fun Pokedex(
 ){
     Scaffold(
             topBar = { AppTopBar(
-                sortMode = sortMode,
                 onSortModeChange = onSortModeChange,
                 clearText = onClearSearch,
                 onValueChange = onSearchTextChange,
                 searchText = searchText
-                )}
+                )
+            }
         ){ innerPadding ->
             Column(
                 modifier = Modifier

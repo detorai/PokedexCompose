@@ -1,7 +1,6 @@
 package com.example.profiki.Common
 
 import androidx.compose.ui.graphics.Color
-import androidx.core.graphics.toColor
 import com.example.profiki.Data.Model.PokemonResponse
 import com.example.profiki.Data.Model.TypesResponse
 

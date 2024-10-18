@@ -1,4 +1,4 @@
-package com.example.profiki.Common
+package com.example.profiki.ui.UI.Pokedex.PokedexComponents
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons

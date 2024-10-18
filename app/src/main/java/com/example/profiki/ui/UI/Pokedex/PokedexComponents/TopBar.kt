@@ -1,36 +1,25 @@
-@file:Suppress("NAME_SHADOWING", "UNUSED_EXPRESSION")
+@file:Suppress("UNUSED_EXPRESSION")
 
-package com.example.profiki.Common
+package com.example.profiki.ui.UI.Pokedex.PokedexComponents
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonColors
 import androidx.compose.material3.Text
@@ -44,22 +33,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.BaselineShift
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.profiki.Data.Model.PokemonResponse
 import com.example.profiki.Data.Model.StateSort
 import com.example.profiki.R
 
 
 @Composable
 fun AppTopBar(
-    sortMode: StateSort,
     onSortModeChange: (StateSort) -> Unit,
     searchText: String,
     onValueChange: (String)-> Unit,
@@ -128,7 +110,20 @@ fun AppTopBar(
                         contentDescription = "Pokemon",
                         alignment = Alignment.Center)
                 }
-                DropdownMenu(
+                /*DropdownMenu(
+                    active = active,
+                    sortMode = sortMode,
+                    onDismissRequest = {active = false},
+                    onClickNumber = {
+                        onSortModeChange(StateSort.NUMBER)
+                        sortMode = StateSort.NUMBER
+                    },
+                    onClickName = {
+                        onSortModeChange(StateSort.NAME)
+                        sortMode = StateSort.NAME
+                    }
+                )*/
+                DropdownMenu (
                     expanded = active,
                     onDismissRequest = { active = false },
                     modifier = Modifier.background(Color.Red)
@@ -140,11 +135,12 @@ fun AppTopBar(
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        Text("Sort by:",
+                        Text(
+                            "Sort by:",
                             color = Color.White,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(0.dp,0.dp,8.dp,0.dp)
+                            modifier = Modifier.padding(0.dp, 0.dp, 8.dp, 0.dp)
                         )
                     }
                     Card(
@@ -165,8 +161,10 @@ fun AppTopBar(
                         ) {
                             RadioButton(
                                 selected = sortMode == StateSort.NUMBER,
-                                onClick = { onSortModeChange(StateSort.NUMBER)
-                                    sortMode = StateSort.NUMBER},
+                                onClick = {
+                                    onSortModeChange(StateSort.NUMBER)
+                                    sortMode = StateSort.NUMBER
+                                },
                                 colors = RadioButtonColors(
                                     selectedColor = Color.Red,
                                     unselectedColor = Color.Red,
@@ -174,7 +172,8 @@ fun AppTopBar(
                                     disabledUnselectedColor = Color.White
                                 )
                             )
-                            Text("Number",
+                            Text(
+                                "Number",
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Medium
 
@@ -189,8 +188,10 @@ fun AppTopBar(
                         ) {
                             RadioButton(
                                 selected = sortMode == StateSort.NAME,
-                                onClick = { onSortModeChange(StateSort.NAME)
-                                    sortMode = StateSort.NAME},
+                                onClick = {
+                                    onSortModeChange(StateSort.NAME)
+                                    sortMode = StateSort.NAME
+                                },
                                 colors = RadioButtonColors(
                                     selectedColor = Color.Red,
                                     unselectedColor = Color.Red,
@@ -199,10 +200,12 @@ fun AppTopBar(
                                 )
                             )
 
-                            Text("Name",
+                            Text(
+                                "Name",
                                 fontSize = 10.sp,
                                 fontWeight = FontWeight.Medium,
-                                modifier = Modifier.padding(0.dp,0.dp,20.dp,0.dp))
+                                modifier = Modifier.padding(0.dp, 0.dp, 20.dp, 0.dp)
+                            )
                         }
                     }
                 }

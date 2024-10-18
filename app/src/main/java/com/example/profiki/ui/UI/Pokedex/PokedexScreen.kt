@@ -30,7 +30,6 @@ class PokedexScreen: Screen {
             pokemons = pokemonsAbout,
             onClickPokemon = {index ->
                 navigator?.push(PokemonsScreen(index, pokemonsAbout))},
-            sortMode = viewModel.currentSortMode,
             onSortModeChange = viewModel::updateSortMode,
             searchText = searchText,
             onClearSearch =  {},
