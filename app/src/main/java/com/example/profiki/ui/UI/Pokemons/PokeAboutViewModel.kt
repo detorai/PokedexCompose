@@ -1,4 +1,4 @@
-package com.example.profiki.ui.UI
+package com.example.profiki.ui.UI.Pokemons
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class PokeAboutViewModel(val apiImpl: PokeApiImpl, private val pokemonList: List<PokemonResponse>): ViewModel() {
+class PokeAboutViewModel(private val apiImpl: PokeApiImpl, private val pokemonList: List<PokemonResponse>): ViewModel() {
 
     private val _pokemon = MutableStateFlow<PokemonResponse?>(null)
     val pokemon: StateFlow<PokemonResponse?> = _pokemon.asStateFlow()
@@ -23,7 +23,7 @@ class PokeAboutViewModel(val apiImpl: PokeApiImpl, private val pokemonList: List
 
     //Получение описания
 
-    fun getSpeciesByName(name: String) {
+    private fun getSpeciesByName(name: String) {
         viewModelScope.launch {
             try {
                 val species = apiImpl.getSpeciesByName(name)

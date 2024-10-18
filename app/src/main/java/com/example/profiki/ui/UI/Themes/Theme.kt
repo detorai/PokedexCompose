@@ -1,4 +1,4 @@
-package com.example.profiki.ui.UI
+package com.example.profiki.ui.UI.Themes
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

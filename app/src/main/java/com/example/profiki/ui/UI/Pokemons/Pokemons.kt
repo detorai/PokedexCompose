@@ -1,4 +1,4 @@
-package com.example.profiki.ui.UI
+package com.example.profiki.ui.UI.Pokemons
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,7 +28,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.profiki.Common.Abilities
@@ -39,14 +38,11 @@ import com.example.profiki.Common.StatName
 import com.example.profiki.Common.StatValue
 import com.example.profiki.Common.TypeRow
 import com.example.profiki.Common.colorDopName
-import com.example.profiki.Common.colorType
 import com.example.profiki.Common.loadImage
 import com.example.profiki.Common.pokemonNumber
-import com.example.profiki.Data.Model.FlavorText
 import com.example.profiki.Data.Model.PokemonResponse
 import com.example.profiki.Data.Model.SpeciesPokemonResponse
 import com.example.profiki.R
-import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.Locale
 
 
