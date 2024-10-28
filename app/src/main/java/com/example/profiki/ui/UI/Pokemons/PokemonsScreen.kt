@@ -8,8 +8,6 @@ import cafe.adriel.voyager.core.screen.ScreenKey
 import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.LocalNavigator
 import com.example.profiki.Data.Model.PokemonResponse
-import com.example.profiki.Data.PokeApiImpl
-import com.example.profiki.Data.PokeService
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
